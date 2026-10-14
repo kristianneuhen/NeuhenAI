@@ -1,0 +1,7 @@
+services:
+  clinic-neuhen:
+    build: .
+    container_name: clinic-neuhen
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
