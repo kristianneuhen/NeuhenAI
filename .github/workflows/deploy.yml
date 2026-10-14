@@ -1,0 +1,88 @@
+name: Test and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: eu-north-1
+  EC2_INSTANCE_ID: i-0cf7ee50d6c80b855
+  DEPLOY_ROLE_ARN: arn:aws:iam::542885032449:role/NeuhenAI-GitHubDeploy
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Run tests
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pytest -q
+
+      - name: Authenticate to AWS with GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy on EC2 through Systems Manager
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          command_id=$(aws ssm send-command \
+            --document-name AWS-RunShellScript \
+            --targets "Key=instanceIds,Values=${EC2_INSTANCE_ID}" \
+            --parameters 'commands=["set -e","cd /home/ec2-user/NeuhenAI","git fetch origin main","git reset --hard origin/main","docker build -t clinic-neuhen:latest .","docker rm -f clinic-neuhen || true","docker run -d --name clinic-neuhen --restart unless-stopped -p 80:8000 clinic-neuhen:latest"]' \
+            --comment "Deploy ${GITHUB_SHA} to NeuhenAI" \
+            --query Command.CommandId \
+            --output text)
+
+          echo "SSM command: ${command_id}"
+
+          for attempt in $(seq 1 60); do
+            status=$(aws ssm get-command-invocation \
+              --command-id "${command_id}" \
+              --instance-id "${EC2_INSTANCE_ID}" \
+              --query Status \
+              --output text 2>/dev/null || true)
+
+            case "${status}" in
+              Success)
+                aws ssm get-command-invocation \
+                  --command-id "${command_id}" \
+                  --instance-id "${EC2_INSTANCE_ID}" \
+                  --query StandardOutputContent \
+                  --output text
+                exit 0
+                ;;
+              Failed|Cancelled|TimedOut|Cancelling)
+                aws ssm get-command-invocation \
+                  --command-id "${command_id}" \
+                  --instance-id "${EC2_INSTANCE_ID}" \
+                  --query '{status:Status,stdout:StandardOutputContent,stderr:StandardErrorContent}' \
+                  --output json
+                exit 1
+                ;;
+            esac
+
+            echo "Deployment status: ${status:-waiting}"
+            sleep 5
+          done
+
+          echo "Timed out waiting for Systems Manager command ${command_id}"
+          exit 1
