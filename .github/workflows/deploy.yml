@@ -49,7 +49,7 @@ jobs:
           command_id=$(aws ssm send-command \
             --document-name AWS-RunShellScript \
             --targets "Key=instanceIds,Values=${EC2_INSTANCE_ID}" \
-            --parameters 'commands=["set -e","git config --global --add safe.directory /home/ec2-user/NeuhenAI","cd /home/ec2-user/NeuhenAI","git fetch origin main","git reset --hard origin/main","docker build -t clinic-neuhen:latest .","docker rm -f clinic-neuhen || true","docker run -d --name clinic-neuhen --restart unless-stopped -p 80:8000 clinic-neuhen:latest"]' \
+            --parameters 'commands=["set -e","git -c safe.directory=/home/ec2-user/NeuhenAI -C /home/ec2-user/NeuhenAI fetch origin main","git -c safe.directory=/home/ec2-user/NeuhenAI -C /home/ec2-user/NeuhenAI reset --hard origin/main","cd /home/ec2-user/NeuhenAI","docker build -t clinic-neuhen:latest .","docker rm -f clinic-neuhen || true","docker run -d --name clinic-neuhen --restart unless-stopped -p 80:8000 clinic-neuhen:latest"]' \
             --comment "Deploy ${GITHUB_SHA} to NeuhenAI" \
             --query Command.CommandId \
             --output text)
