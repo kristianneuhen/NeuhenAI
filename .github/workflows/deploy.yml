@@ -28,10 +28,12 @@ jobs:
           python-version: "3.13"
 
       - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
-          pytest -q
+          python -m pytest -q
 
       - name: Authenticate to AWS with GitHub OIDC
         uses: aws-actions/configure-aws-credentials@v4
