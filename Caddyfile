@@ -1,0 +1,4 @@
+neuhenai.com, www.neuhenai.com {
+    encode zstd gzip
+    reverse_proxy clinic-neuhen:8000
+}
