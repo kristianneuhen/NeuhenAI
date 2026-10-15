@@ -27,10 +27,6 @@
           <p class="step-indicator">Step {{ step }} of 4</p>
           {% endif %}
         </header>
-        {% else %}
-        <header class="site-header site-header--legal">
-          <a class="legal-logo" href="{{ url_for('index') }}" aria-label="Neuhen AI home">NEUHEN AI</a>
-        </header>
         {% endif %}
 
         <main class="page-shell">
@@ -43,6 +39,7 @@
           {% endif %}
           <a href="{{ url_for('terms') }}">Terms</a>
           <a href="{{ url_for('privacy') }}">Privacy</a>
+          <a href="{{ url_for('contact') }}">Contact us</a>
         </footer>
       </div>
     </div>

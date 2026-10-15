@@ -59,18 +59,31 @@ def test_privacy_page_contains_the_supplied_policy_and_contact_details():
     assert b"kristianneuhen@gmail.com" in response.data
 
 
-def test_legal_pages_link_to_the_main_page_with_the_neuhen_logo_and_footer_link():
+def test_legal_pages_link_to_the_main_page_without_a_header_logo():
     client = app.test_client()
 
     for path in ("/terms", "/privacy"):
         response = client.get(path)
 
         assert response.status_code == 200
-        assert b"NEUHEN AI" in response.data
         assert b"Main page" in response.data
+        assert b'legal-logo' not in response.data
         assert b"return back" not in response.data
         assert b"Return back to client acquisition" not in response.data
         assert b'href="/"' in response.data
+
+
+def test_contact_page_has_the_requested_mailto_form_and_map():
+    client = app.test_client()
+
+    response = client.get("/contact")
+
+    assert response.status_code == 200
+    assert b'action="mailto:kristianneuhen@gmail.com"' in response.data
+    assert b'name="phone"' in response.data
+    assert b'name="company"' not in response.data
+    assert b"contact-map__beacon" in response.data
+    assert b"kristianneuhen@gmail.com" in response.data
 
 
 def test_video_settings_are_rendered_as_safe_youtube_embeds():

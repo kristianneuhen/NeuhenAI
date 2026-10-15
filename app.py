@@ -121,10 +121,10 @@ def add_security_headers(response):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
         "base-uri 'self'; "
-        "form-action 'self'; "
+        "form-action 'self' mailto:; "
         "frame-ancestors 'self'; "
         "frame-src https://calendar.google.com https://calendar.app.google https://www.youtube.com; "
-        "img-src 'self' data:; "
+        "img-src 'self' data: https://assets.aceternity.com; "
         "object-src 'none'; "
         "script-src 'self'; "
         "style-src 'self'"
@@ -197,6 +197,11 @@ def terms():
 @app.get("/privacy")
 def privacy():
     return render_template("privacy.html", step=None)
+
+
+@app.get("/contact")
+def contact():
+    return render_template("contact.html", step=None)
 
 
 @app.get("/health")

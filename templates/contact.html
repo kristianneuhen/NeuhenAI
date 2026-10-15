@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us | Neuhen AI{% endblock %}
+
+{% block content %}
+<section class="contact-layout" aria-labelledby="contact-title">
+  <div class="contact-details">
+    <h1 id="contact-title">Contact us</h1>
+    <p>We are always looking for ways to improve our products and services. Contact us and let us know how we can help you.</p>
+    <a class="contact-email" href="mailto:kristianneuhen@gmail.com">kristianneuhen@gmail.com</a>
+
+    <figure class="contact-map" aria-label="World map with an animated point over North America">
+      <img src="https://assets.aceternity.com/pro/world.svg" alt="" />
+      <span class="contact-map__beacon" aria-hidden="true">
+        <span></span><span></span><span></span><i></i>
+      </span>
+    </figure>
+  </div>
+
+  <form class="contact-form" action="mailto:kristianneuhen@gmail.com" method="post" enctype="text/plain">
+    <div class="contact-field">
+      <label for="name">Full name</label>
+      <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+    </div>
+    <div class="contact-field">
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+    </div>
+    <div class="contact-field">
+      <label for="phone">Phone number</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Your phone number" />
+    </div>
+    <div class="contact-field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Type your message here" required></textarea>
+    </div>
+    <button class="contact-submit" type="submit">Submit</button>
+    <p class="contact-note">Submitting opens your email app with a message addressed to us.</p>
+  </form>
+</section>
+{% endblock %}
