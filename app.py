@@ -12,6 +12,15 @@ from flask import Flask, abort, redirect, render_template, request, session, url
 from video_settings import VIDEO_URLS
 
 
+# Google Calendar Appointment Schedule shown on Step 3. Replace this URL if
+# you create a different booking schedule. A deployment environment variable
+# named GOOGLE_CALENDAR_EMBED_URL can override it without changing this file.
+DEFAULT_GOOGLE_CALENDAR_EMBED_URL = (
+    "https://calendar.google.com/calendar/appointments/schedules/"
+    "AcZssZ0kyAF2ng41OkPpoNiav4ojHqQYUikX6HAuvZ1OpjgNTirfJ4WHRnzucY1bv6MdgayC8-7N7idi?gv=true"
+)
+
+
 def _secret_key() -> str:
     configured_key = os.environ.get("FLASK_SECRET_KEY")
     if configured_key:
@@ -25,8 +34,8 @@ def _secret_key() -> str:
     return "local-development-key-not-for-production"
 
 
-def _trusted_google_calendar_url(variable_name: str) -> str | None:
-    candidate = os.environ.get(variable_name, "").strip()
+def _trusted_google_calendar_url(variable_name: str, default: str = "") -> str | None:
+    candidate = os.environ.get(variable_name, default).strip()
     if not candidate:
         return None
 
@@ -152,7 +161,9 @@ def registration():
 @consent_required
 def book():
     booking_url = _trusted_google_calendar_url("GOOGLE_CALENDAR_BOOKING_URL")
-    embed_url = _trusted_google_calendar_url("GOOGLE_CALENDAR_EMBED_URL")
+    embed_url = _trusted_google_calendar_url(
+        "GOOGLE_CALENDAR_EMBED_URL", DEFAULT_GOOGLE_CALENDAR_EMBED_URL
+    )
     return render_template(
         "book.html",
         step=3,

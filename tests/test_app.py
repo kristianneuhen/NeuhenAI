@@ -39,8 +39,7 @@ def test_video_settings_are_rendered_as_safe_youtube_embeds():
 
         assert page.status_code == 200
         assert b"https://www.youtube.com/embed/1kJ8IUANR8s?rel=0" in page.data
-        assert b"Open video on YouTube" in page.data
-        assert b"https://www.youtube.com/watch?v=1kJ8IUANR8s" in page.data
+        assert b"Open video on YouTube" not in page.data
 
 
 def test_consent_is_required_before_second_step():
@@ -82,8 +81,21 @@ def test_consent_cannot_be_submitted_without_checkbox():
     assert response.status_code == 400
 
 
+def test_booking_page_embeds_configured_google_calendar_schedule():
+    client = app.test_client()
+    client.get("/")
+    with client.session_transaction() as session:
+        session["terms_accepted"] = True
+
+    page = client.get("/book")
+
+    assert b"calendar.google.com/calendar/appointments/schedules/AcZssZ0k" in page.data
+    assert b"Google Calendar booking page" in page.data
+
+
 def test_booking_page_uses_only_google_calendar_urls(monkeypatch):
     monkeypatch.setenv("GOOGLE_CALENDAR_BOOKING_URL", "https://calendar.app.google/example")
+    monkeypatch.setenv("GOOGLE_CALENDAR_EMBED_URL", "")
     client = app.test_client()
     client.get("/")
     with client.session_transaction() as session:
@@ -97,6 +109,7 @@ def test_booking_page_uses_only_google_calendar_urls(monkeypatch):
 
 def test_booking_page_rejects_non_google_calendar_urls(monkeypatch):
     monkeypatch.setenv("GOOGLE_CALENDAR_BOOKING_URL", "https://untrusted.example/book")
+    monkeypatch.setenv("GOOGLE_CALENDAR_EMBED_URL", "https://untrusted.example/embed")
     client = app.test_client()
     client.get("/")
     with client.session_transaction() as session:

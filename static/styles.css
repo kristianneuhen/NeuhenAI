@@ -131,15 +131,6 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   width: 100%;
 }
 
-.video-link {
-  color: #c6c9ce;
-  display: inline-block;
-  font-size: .9rem;
-  text-underline-offset: 3px;
-}
-
-.video-link:hover { color: #f3f4f6; }
-
 .video-placeholder span,
 .video-placeholder small { color: #a8adb5; }
 .video-placeholder strong { font-size: 1.15rem; }
