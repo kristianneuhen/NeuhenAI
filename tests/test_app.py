@@ -23,6 +23,7 @@ def test_funnel_pages_use_the_shared_frame_with_the_ambient_background():
     response = client.get("/")
 
     assert b'class="site-frame"' in response.data
+    assert b'class="site-frame__canvas"' in response.data
     assert b'id="ambient-background"' in response.data
     assert b"background.js" in response.data
 
