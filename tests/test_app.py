@@ -28,6 +28,25 @@ def test_funnel_pages_use_the_shared_frame_with_the_ambient_background():
     assert b"background.js" in response.data
 
 
+def test_global_neuhen_brand_label_is_removed_from_the_funnel_header():
+    client = app.test_client()
+
+    response = client.get("/")
+
+    assert b'class="brand"' not in response.data
+
+
+def test_terms_page_contains_the_supplied_terms_and_contact_details():
+    client = app.test_client()
+
+    response = client.get("/terms")
+
+    assert response.status_code == 200
+    assert b"1. Use of Our Website and Services" in response.data
+    assert b"12. Contact Us" in response.data
+    assert b"kristianneuhen@gmail.com" in response.data
+
+
 def test_video_settings_are_rendered_as_safe_youtube_embeds():
     client = app.test_client()
 

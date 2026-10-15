@@ -12,9 +12,9 @@
     <canvas id="ambient-background" aria-hidden="true"></canvas>
     <div class="site-frame">
       <div class="site-frame__canvas">
+        {% if step %}
         <header class="site-header">
           <div class="header-left">
-            <a class="brand" href="{{ url_for('index') }}">Neuhen AI</a>
             {% if step == 2 %}
             <a class="back-link" href="{{ url_for('index') }}">← Go back</a>
             {% elif step == 3 %}
@@ -27,6 +27,7 @@
           <p class="step-indicator">Step {{ step }} of 4</p>
           {% endif %}
         </header>
+        {% endif %}
 
         <main class="page-shell">
           {% block content %}{% endblock %}
