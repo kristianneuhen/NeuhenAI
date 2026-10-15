@@ -235,8 +235,8 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 }
 .contact-map img {
   display: block;
-  filter: invert(1) brightness(.45);
-  opacity: .75;
+  filter: invert(1) grayscale(1) brightness(.62) contrast(.88);
+  opacity: .82;
   width: 100%;
 }
 .contact-form {
