@@ -59,15 +59,17 @@ def test_privacy_page_contains_the_supplied_policy_and_contact_details():
     assert b"kristianneuhen@gmail.com" in response.data
 
 
-def test_legal_pages_link_back_to_client_acquisition():
+def test_legal_pages_link_to_the_main_page_with_the_neuhen_logo_and_footer_link():
     client = app.test_client()
 
     for path in ("/terms", "/privacy"):
         response = client.get(path)
 
         assert response.status_code == 200
-        assert b"return back" in response.data
-        assert b"Return back to client acquisition" in response.data
+        assert b"NEUHEN AI" in response.data
+        assert b"Main page" in response.data
+        assert b"return back" not in response.data
+        assert b"Return back to client acquisition" not in response.data
         assert b'href="/"' in response.data
 
 

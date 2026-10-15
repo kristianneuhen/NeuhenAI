@@ -29,18 +29,18 @@
         </header>
         {% else %}
         <header class="site-header site-header--legal">
-          <a class="legal-back-link" href="{{ url_for('index') }}">return back</a>
+          <a class="legal-logo" href="{{ url_for('index') }}" aria-label="Neuhen AI home">NEUHEN AI</a>
         </header>
         {% endif %}
 
         <main class="page-shell">
           {% block content %}{% endblock %}
-          {% if not step %}
-          <a class="legal-return-button" href="{{ url_for('index') }}">Return back to client acquisition</a>
-          {% endif %}
         </main>
 
         <footer class="site-footer">
+          {% if not step %}
+          <a href="{{ url_for('index') }}">Main page</a>
+          {% endif %}
           <a href="{{ url_for('terms') }}">Terms</a>
           <a href="{{ url_for('privacy') }}">Privacy</a>
         </footer>
