@@ -27,6 +27,13 @@ def test_funnel_pages_use_the_shared_frame_with_the_ambient_background():
     assert b"background.js" in response.data
 
 
+def test_dotted_background_is_static_and_has_no_pointer_hover_effect():
+    background_script = Path("static/background.js").read_text(encoding="utf-8")
+
+    assert "pointermove" not in background_script
+    assert "requestAnimationFrame" not in background_script
+
+
 def test_video_settings_are_rendered_as_safe_youtube_embeds():
     client = app.test_client()
 
