@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from app import app
 
 
@@ -7,6 +9,12 @@ def test_healthcheck():
 
     assert response.status_code == 200
     assert response.get_json() == {"status": "ok"}
+
+
+def test_docker_image_includes_video_settings_module():
+    dockerfile = Path("Dockerfile").read_text(encoding="utf-8")
+
+    assert "COPY video_settings.py ./" in dockerfile
 
 
 def test_funnel_pages_load_the_ambient_background():
