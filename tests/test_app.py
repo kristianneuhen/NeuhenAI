@@ -9,6 +9,15 @@ def test_healthcheck():
     assert response.get_json() == {"status": "ok"}
 
 
+def test_funnel_pages_load_the_ambient_background():
+    client = app.test_client()
+
+    response = client.get("/")
+
+    assert b'id="ambient-background"' in response.data
+    assert b"background.js" in response.data
+
+
 def test_consent_is_required_before_second_step():
     client = app.test_client()
 
