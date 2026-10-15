@@ -11,32 +11,30 @@
   <body>
     <canvas id="ambient-background" aria-hidden="true"></canvas>
     <div class="site-frame">
-      <div class="site-frame__inner">
-        <header class="site-header">
-          <div class="header-left">
-            <a class="brand" href="{{ url_for('index') }}">Neuhen AI</a>
-            {% if step == 2 %}
-            <a class="back-link" href="{{ url_for('index') }}">← Go back</a>
-            {% elif step == 3 %}
-            <a class="back-link" href="{{ url_for('registration') }}">← Go back</a>
-            {% elif step == 4 %}
-            <a class="back-link" href="{{ url_for('book') }}">← Go back</a>
-            {% endif %}
-          </div>
-          {% if step %}
-          <p class="step-indicator">Step {{ step }} of 4</p>
+      <header class="site-header">
+        <div class="header-left">
+          <a class="brand" href="{{ url_for('index') }}">Neuhen AI</a>
+          {% if step == 2 %}
+          <a class="back-link" href="{{ url_for('index') }}">← Go back</a>
+          {% elif step == 3 %}
+          <a class="back-link" href="{{ url_for('registration') }}">← Go back</a>
+          {% elif step == 4 %}
+          <a class="back-link" href="{{ url_for('book') }}">← Go back</a>
           {% endif %}
-        </header>
+        </div>
+        {% if step %}
+        <p class="step-indicator">Step {{ step }} of 4</p>
+        {% endif %}
+      </header>
 
-        <main class="page-shell">
-          {% block content %}{% endblock %}
-        </main>
+      <main class="page-shell">
+        {% block content %}{% endblock %}
+      </main>
 
-        <footer class="site-footer">
-          <a href="{{ url_for('terms') }}">Terms</a>
-          <a href="{{ url_for('privacy') }}">Privacy</a>
-        </footer>
-      </div>
+      <footer class="site-footer">
+        <a href="{{ url_for('terms') }}">Terms</a>
+        <a href="{{ url_for('privacy') }}">Privacy</a>
+      </footer>
     </div>
   </body>
 </html>
