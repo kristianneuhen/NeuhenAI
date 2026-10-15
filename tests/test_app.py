@@ -17,14 +17,14 @@ def test_docker_image_includes_video_settings_module():
     assert "COPY video_settings.py ./" in dockerfile
 
 
-def test_funnel_pages_use_the_shared_frame_without_the_old_background():
+def test_funnel_pages_use_the_shared_frame_with_the_ambient_background():
     client = app.test_client()
 
     response = client.get("/")
 
     assert b'class="site-frame"' in response.data
-    assert b"ambient-background" not in response.data
-    assert b"background.js" not in response.data
+    assert b'id="ambient-background"' in response.data
+    assert b"background.js" in response.data
 
 
 def test_video_settings_are_rendered_as_safe_youtube_embeds():

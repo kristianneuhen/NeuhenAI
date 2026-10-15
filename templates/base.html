@@ -6,8 +6,10 @@
     <meta name="description" content="Neuhen AI client acquisition service." />
     <title>{% block title %}Neuhen AI{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <script src="{{ url_for('static', filename='background.js') }}" defer></script>
   </head>
   <body>
+    <canvas id="ambient-background" aria-hidden="true"></canvas>
     <div class="site-frame">
       <header class="site-header">
         <div class="header-left">
