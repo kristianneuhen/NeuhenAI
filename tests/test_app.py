@@ -71,3 +71,4 @@ def test_booking_page_rejects_non_google_calendar_urls(monkeypatch):
     page = client.get("/book")
 
     assert b"Calendar setup needed" in page.data
+    assert b"Continue to the next step" in page.data

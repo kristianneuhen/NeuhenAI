@@ -40,6 +40,11 @@
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <button class="button button--secondary" type="submit">I have completed my booking</button>
   </form>
+  {% else %}
+  <form class="completion-form" action="{{ url_for('booking_complete') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button class="button button--secondary" type="submit">Continue to the next step</button>
+  </form>
   {% endif %}
 </section>
 {% endblock %}
