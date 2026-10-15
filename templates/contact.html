@@ -7,17 +7,25 @@
   <div class="contact-details">
     <h1 id="contact-title">Contact us</h1>
     <p>We are always looking for ways to improve our products and services. Contact us and let us know how we can help you.</p>
-    <a class="contact-email" href="mailto:kristianneuhen@gmail.com">kristianneuhen@gmail.com</a>
 
-    <figure class="contact-map" aria-label="World map with an animated point over North America">
+    <figure class="contact-map" aria-label="World map">
       <img src="https://assets.aceternity.com/pro/world.svg" alt="" />
-      <span class="contact-map__beacon" aria-hidden="true">
-        <span></span><span></span><span></span><i></i>
-      </span>
     </figure>
   </div>
 
-  <form class="contact-form" action="mailto:kristianneuhen@gmail.com" method="post" enctype="text/plain">
+  <form class="contact-form" action="{{ url_for('contact_submit') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <div class="contact-honeypot" aria-hidden="true">
+      <label for="website">Website</label>
+      <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    {% if sent %}
+    <p class="contact-feedback" role="status">Thank you. Your message has been sent.</p>
+    {% elif contact_error == "rate_limited" %}
+    <p class="contact-feedback contact-feedback--error" role="alert">Please wait a few minutes before submitting another message.</p>
+    {% elif contact_error == "delivery_failed" %}
+    <p class="contact-feedback contact-feedback--error" role="alert">We could not send your message right now. Please try again later.</p>
+    {% endif %}
     <div class="contact-field">
       <label for="name">Full name</label>
       <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
@@ -35,7 +43,7 @@
       <textarea id="message" name="message" rows="5" placeholder="Type your message here" required></textarea>
     </div>
     <button class="contact-submit" type="submit">Submit</button>
-    <p class="contact-note">Submitting opens your email app with a message addressed to us.</p>
+    <p class="contact-note">Your details are used only to respond to this request.</p>
   </form>
 </section>
 {% endblock %}

@@ -73,17 +73,99 @@ def test_legal_pages_link_to_the_main_page_without_a_header_logo():
         assert b'href="/"' in response.data
 
 
-def test_contact_page_has_the_requested_mailto_form_and_map():
+def test_contact_page_has_the_requested_secure_form_and_static_map():
     client = app.test_client()
 
     response = client.get("/contact")
 
     assert response.status_code == 200
-    assert b'action="mailto:kristianneuhen@gmail.com"' in response.data
+    assert b'action="/contact"' in response.data
+    assert b"mailto:" not in response.data
     assert b'name="phone"' in response.data
     assert b'name="company"' not in response.data
-    assert b"contact-map__beacon" in response.data
-    assert b"kristianneuhen@gmail.com" in response.data
+    assert b"contact-map__beacon" not in response.data
+    assert b"kristianneuhen@gmail.com" not in response.data
+
+
+def test_contact_submission_requires_csrf_protection():
+    client = app.test_client()
+
+    response = client.post(
+        "/contact",
+        data={"name": "Visitor", "email": "visitor@example.com", "message": "Hello"},
+    )
+
+    assert response.status_code == 400
+
+
+def test_contact_submission_sends_validated_fields(monkeypatch):
+    client = app.test_client()
+    client.get("/contact")
+    with client.session_transaction() as session:
+        csrf_token = session["csrf_token"]
+
+    delivered = {}
+
+    def send_email(submission):
+        delivered.update(submission)
+        return True
+
+    monkeypatch.setattr("app._send_contact_email", send_email)
+    response = client.post(
+        "/contact",
+        data={
+            "csrf_token": csrf_token,
+            "name": "Visitor Name",
+            "email": "visitor@example.com",
+            "phone": "+48 123 456 789",
+            "message": "I would like to learn more.",
+        },
+    )
+
+    assert response.status_code == 303
+    assert response.headers["Location"].endswith("/contact?sent=1")
+    assert delivered == {
+        "name": "Visitor Name",
+        "email": "visitor@example.com",
+        "phone": "+48 123 456 789",
+        "message": "I would like to learn more.",
+    }
+
+
+def test_contact_mail_settings_reads_parameter_store(monkeypatch):
+    class FakeSsm:
+        def get_parameter(self, **kwargs):
+            assert kwargs == {
+                "Name": "/neuhenai/prod/contact/smtp",
+                "WithDecryption": True,
+            }
+            return {
+                "Parameter": {
+                    "Value": (
+                        '{"host":"smtp.gmail.com","port":465,"use_ssl":true,'
+                        '"username":"sender@example.com","from":"sender@example.com",'
+                        '"recipient":"recipient@example.com","password":"app-password"}'
+                    )
+                }
+            }
+
+    monkeypatch.delenv("CONTACT_SMTP_HOST", raising=False)
+    monkeypatch.delenv("CONTACT_SMTP_USERNAME", raising=False)
+    monkeypatch.delenv("CONTACT_SMTP_PASSWORD", raising=False)
+    monkeypatch.delenv("CONTACT_RECIPIENT", raising=False)
+    monkeypatch.setattr("app.boto3.client", lambda service, region_name=None: FakeSsm())
+
+    from app import _contact_mail_settings
+
+    assert _contact_mail_settings() == {
+        "host": "smtp.gmail.com",
+        "username": "sender@example.com",
+        "password": "app-password",
+        "recipient": "recipient@example.com",
+        "from_address": "sender@example.com",
+        "port": "465",
+        "use_ssl": "True",
+    }
 
 
 def test_video_settings_are_rendered_as_safe_youtube_embeds():

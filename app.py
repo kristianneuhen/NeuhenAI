@@ -1,14 +1,23 @@
 from __future__ import annotations
 
 import hmac
+import json
 import os
 import secrets
 import re
+import smtplib
+import ssl
+import threading
+import time
+from collections import defaultdict, deque
 from datetime import timedelta
+from email.message import EmailMessage
 from functools import wraps
 from urllib.parse import parse_qs, urlparse
 
 from flask import Flask, abort, redirect, render_template, request, session, url_for
+import boto3
+from botocore.exceptions import BotoCoreError, ClientError
 from video_settings import VIDEO_URLS
 
 
@@ -19,6 +28,14 @@ DEFAULT_GOOGLE_CALENDAR_EMBED_URL = (
     "https://calendar.google.com/calendar/appointments/schedules/"
     "AcZssZ0kyAF2ng41OkPpoNiav4ojHqQYUikX6HAuvZ1OpjgNTirfJ4WHRnzucY1bv6MdgayC8-7N7idi?gv=true"
 )
+
+CONTACT_RATE_LIMIT_SECONDS = 600
+CONTACT_RATE_LIMIT_MAX_SUBMISSIONS = 3
+CONTACT_SSM_PARAMETER_NAME = os.environ.get(
+    "CONTACT_SSM_PARAMETER_NAME", "/neuhenai/prod/contact/smtp"
+).strip()
+_contact_submissions: dict[str, deque[float]] = defaultdict(deque)
+_contact_submissions_lock = threading.Lock()
 
 
 def _secret_key() -> str:
@@ -71,6 +88,150 @@ def _trusted_youtube_video(url: str) -> dict[str, str] | None:
     }
 
 
+def _contact_field(name: str, maximum_length: int, *, required: bool = True) -> str:
+    value = request.form.get(name, "").strip()
+    if (required and not value) or len(value) > maximum_length or "\x00" in value:
+        abort(400)
+    return value
+
+
+def _contact_submission() -> dict[str, str]:
+    name = _contact_field("name", 120)
+    email = _contact_field("email", 254)
+    phone = _contact_field("phone", 50, required=False)
+    message = _contact_field("message", 4_000)
+
+    if not re.fullmatch(r"[^@\s]{1,64}@[^@\s]{1,255}\.[^@\s]{2,}", email):
+        abort(400)
+
+    return {"name": name, "email": email, "phone": phone, "message": message}
+
+
+def _contact_submission_allowed() -> bool:
+    forwarded_for = request.headers.get("X-Forwarded-For", "")
+    client_address = forwarded_for.rsplit(",", maxsplit=1)[-1].strip() or request.remote_addr
+    now = time.monotonic()
+
+    with _contact_submissions_lock:
+        submissions = _contact_submissions[client_address]
+        while submissions and now - submissions[0] >= CONTACT_RATE_LIMIT_SECONDS:
+            submissions.popleft()
+        if len(submissions) >= CONTACT_RATE_LIMIT_MAX_SUBMISSIONS:
+            return False
+        submissions.append(now)
+    return True
+
+
+def _contact_mail_settings_from_mapping(values: dict[str, object]) -> dict[str, str] | None:
+    host = str(values.get("host", "")).strip()
+    username = str(values.get("username", "")).strip()
+    password = str(values.get("password", "")).strip()
+    recipient = str(values.get("recipient", "")).strip()
+    if not all((host, username, password, recipient)):
+        return None
+
+    use_ssl_value = values.get("use_ssl", True)
+    use_ssl = use_ssl_value is not False and str(use_ssl_value).lower() != "false"
+    try:
+        port = int(values.get("port", 465 if use_ssl else 587))
+    except (TypeError, ValueError):
+        return None
+    if not 1 <= port <= 65535:
+        return None
+
+    return {
+        "host": host,
+        "username": username,
+        "password": password,
+        "recipient": recipient,
+        "from_address": str(values.get("from", username)).strip() or username,
+        "port": str(port),
+        "use_ssl": str(use_ssl),
+    }
+
+
+def _contact_mail_settings_from_environment() -> dict[str, str] | None:
+    required = {
+        "host": os.environ.get("CONTACT_SMTP_HOST", "").strip(),
+        "username": os.environ.get("CONTACT_SMTP_USERNAME", "").strip(),
+        "password": os.environ.get("CONTACT_SMTP_PASSWORD", "").strip(),
+        "recipient": os.environ.get("CONTACT_RECIPIENT", "").strip(),
+    }
+    if not all(required.values()):
+        return None
+
+    return _contact_mail_settings_from_mapping(
+        {
+            **required,
+            "from": os.environ.get("CONTACT_SMTP_FROM", required["username"]),
+            "port": os.environ.get("CONTACT_SMTP_PORT", "465"),
+            "use_ssl": os.environ.get("CONTACT_SMTP_USE_SSL", "true"),
+        }
+    )
+
+
+def _contact_mail_settings_from_parameter_store() -> dict[str, str] | None:
+    if not CONTACT_SSM_PARAMETER_NAME:
+        return None
+
+    region = (
+        os.environ.get("CONTACT_SSM_REGION")
+        or os.environ.get("AWS_DEFAULT_REGION")
+        or os.environ.get("AWS_REGION")
+    )
+    try:
+        client = boto3.client("ssm", region_name=region) if region else boto3.client("ssm")
+        response = client.get_parameter(Name=CONTACT_SSM_PARAMETER_NAME, WithDecryption=True)
+        values = json.loads(response["Parameter"]["Value"])
+    except (BotoCoreError, ClientError, KeyError, TypeError, json.JSONDecodeError):
+        return None
+
+    if not isinstance(values, dict):
+        return None
+    return _contact_mail_settings_from_mapping(values)
+
+
+def _contact_mail_settings() -> dict[str, str] | None:
+    # Environment variables remain useful for local development only. Production
+    # deployment intentionally supplies neither a contact env file nor SMTP values.
+    return _contact_mail_settings_from_environment() or _contact_mail_settings_from_parameter_store()
+
+
+def _send_contact_email(submission: dict[str, str]) -> bool:
+    settings = _contact_mail_settings()
+    if not settings:
+        return False
+
+    email = EmailMessage()
+    email["Subject"] = "New client acquisition contact request"
+    email["From"] = settings["from_address"]
+    email["To"] = settings["recipient"]
+    email["Reply-To"] = submission["email"]
+    email.set_content(
+        "New website contact request\n\n"
+        f"Name: {submission['name']}\n"
+        f"Email: {submission['email']}\n"
+        f"Phone: {submission['phone'] or 'Not provided'}\n\n"
+        f"Message:\n{submission['message']}\n"
+    )
+
+    try:
+        if settings["use_ssl"] == "True":
+            with smtplib.SMTP_SSL(
+                settings["host"], int(settings["port"]), context=ssl.create_default_context(), timeout=10
+            ) as client:
+                client.login(settings["username"], settings["password"])
+                client.send_message(email)
+        else:
+            with smtplib.SMTP(settings["host"], int(settings["port"]), timeout=10) as client:
+                client.starttls(context=ssl.create_default_context())
+                client.login(settings["username"], settings["password"])
+                client.send_message(email)
+    except (OSError, smtplib.SMTPException, ValueError):
+        return False
+    return True
+
+
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY=_secret_key(),
@@ -121,7 +282,7 @@ def add_security_headers(response):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
         "base-uri 'self'; "
-        "form-action 'self' mailto:; "
+        "form-action 'self'; "
         "frame-ancestors 'self'; "
         "frame-src https://calendar.google.com https://calendar.app.google https://www.youtube.com; "
         "img-src 'self' data: https://assets.aceternity.com; "
@@ -201,7 +362,21 @@ def privacy():
 
 @app.get("/contact")
 def contact():
-    return render_template("contact.html", step=None)
+    return render_template("contact.html", step=None, sent=request.args.get("sent") == "1")
+
+
+@app.post("/contact")
+def contact_submit():
+    validate_csrf()
+    if request.form.get("website", ""):
+        abort(400)
+
+    submission = _contact_submission()
+    if not _contact_submission_allowed():
+        return render_template("contact.html", step=None, contact_error="rate_limited"), 429
+    if not _send_contact_email(submission):
+        return render_template("contact.html", step=None, contact_error="delivery_failed"), 503
+    return redirect(url_for("contact", sent="1"), code=303)
 
 
 @app.get("/health")

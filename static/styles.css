@@ -228,12 +228,6 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 }
 .contact-details { min-width: 0; }
 .contact-details > p { max-width: 48ch; }
-.contact-email {
-  color: #a8adb5;
-  display: inline-block;
-  font-size: .9rem;
-  margin-top: 22px;
-}
 .contact-map {
   margin: 50px 0 0;
   max-width: 510px;
@@ -244,39 +238,6 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   filter: invert(1) brightness(.45);
   opacity: .75;
   width: 100%;
-}
-.contact-map__beacon {
-  height: 18px;
-  left: 25%;
-  position: absolute;
-  top: 43%;
-  width: 18px;
-}
-.contact-map__beacon span,
-.contact-map__beacon i {
-  border-radius: 50%;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.contact-map__beacon span {
-  animation: map-pulse 5s ease-out infinite;
-  background: rgba(14, 165, 233, .2);
-  height: 68px;
-  width: 68px;
-}
-.contact-map__beacon span:nth-child(2) { animation-delay: 1.65s; }
-.contact-map__beacon span:nth-child(3) { animation-delay: 3.3s; }
-.contact-map__beacon i {
-  background: #7dd3fc;
-  box-shadow: 0 0 8px 3px rgba(14, 165, 233, .75);
-  height: 6px;
-  width: 6px;
-}
-@keyframes map-pulse {
-  0% { opacity: .85; transform: translate(-50%, -50%) scale(.08); }
-  75%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
 }
 .contact-form {
   background: linear-gradient(180deg, #181818, #101010);
@@ -300,6 +261,9 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 }
 .contact-field input:focus,
 .contact-field textarea:focus { border-color: #a8adb5; outline: 2px solid #a8adb5; outline-offset: 2px; }
+.contact-honeypot { left: -10000px; position: absolute; }
+.contact-feedback { color: #b9f6ca; line-height: 1.5; margin: 0; }
+.contact-feedback--error { color: #ffb4ab; }
 .contact-submit {
   align-self: flex-start;
   background: #262626;
