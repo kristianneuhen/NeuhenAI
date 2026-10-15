@@ -95,7 +95,7 @@ a { color: inherit; }
 
 .page-shell {
   display: grid;
-  padding: 64px 24px 96px;
+  padding: 32px 24px 48px;
   place-items: center;
 }
 
@@ -285,7 +285,7 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   body { padding: 8px; }
   .site-frame { border-radius: 18px; }
   .site-header { padding-bottom: 8px; }
-  .page-shell { padding: 48px 16px 80px; }
+  .page-shell { padding: 24px 16px 40px; }
   .funnel-card, .legal-card { padding: 28px 22px; }
   .calendar-frame { height: 620px; }
   .contact-layout { grid-template-columns: 1fr; }
