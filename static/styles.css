@@ -179,6 +179,12 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   width: 100%;
 }
 
+/* Google owns the iframe markup. This safely neutralizes its blue accents
+   without changing its controls or booking behavior. */
+.calendar-frame--muted {
+  filter: grayscale(1) brightness(.9) contrast(.92);
+}
+
 .calendar-card { min-height: 160px; }
 .calendar-card--pending { border-style: solid; }
 .calendar-card p:last-child { margin-bottom: 0; }
