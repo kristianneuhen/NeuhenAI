@@ -11,11 +11,8 @@
     Calendar. Keep that confirmation for the time and joining information.
   </p>
 
-  <div class="video-placeholder" role="img" aria-label="Placeholder for a thank-you video">
-    <span>Thank-you video</span>
-    <strong>What happens after you book</strong>
-    <small>Add your video here later</small>
-  </div>
+  {% set video = videos.thank_you %}
+  {% include "_video_embed.html" %}
 
   <ol class="simple-list">
     <li>Check your inbox for the Google Calendar confirmation.</li>

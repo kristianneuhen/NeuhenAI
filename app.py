@@ -3,11 +3,13 @@ from __future__ import annotations
 import hmac
 import os
 import secrets
+import re
 from datetime import timedelta
 from functools import wraps
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 from flask import Flask, abort, redirect, render_template, request, session, url_for
+from video_settings import VIDEO_URLS
 
 
 def _secret_key() -> str:
@@ -33,6 +35,31 @@ def _trusted_google_calendar_url(variable_name: str) -> str | None:
     if parsed.scheme != "https" or parsed.hostname not in trusted_hosts:
         return None
     return candidate
+
+
+def _trusted_youtube_video(url: str) -> dict[str, str] | None:
+    """Return safe watch and embed URLs for an approved YouTube video."""
+    parsed = urlparse(url.strip())
+    if parsed.scheme != "https":
+        return None
+
+    host = (parsed.hostname or "").lower()
+    video_id = ""
+    if host in {"youtube.com", "www.youtube.com", "m.youtube.com"}:
+        if parsed.path == "/watch":
+            video_id = parse_qs(parsed.query).get("v", [""])[0]
+        elif parsed.path.startswith("/embed/") or parsed.path.startswith("/shorts/"):
+            video_id = parsed.path.rsplit("/", maxsplit=1)[-1]
+    elif host == "youtu.be":
+        video_id = parsed.path.lstrip("/").split("/", maxsplit=1)[0]
+
+    if not re.fullmatch(r"[A-Za-z0-9_-]{11}", video_id):
+        return None
+
+    return {
+        "watch_url": f"https://www.youtube.com/watch?v={video_id}",
+        "embed_url": f"https://www.youtube.com/embed/{video_id}?rel=0",
+    }
 
 
 app = Flask(__name__)
@@ -72,7 +99,12 @@ def consent_required(view):
 
 @app.context_processor
 def inject_template_values():
-    return {"csrf_token": csrf_token, "terms_accepted": session.get("terms_accepted", False)}
+    videos = {name: _trusted_youtube_video(url) for name, url in VIDEO_URLS.items()}
+    return {
+        "csrf_token": csrf_token,
+        "terms_accepted": session.get("terms_accepted", False),
+        "videos": videos,
+    }
 
 
 @app.after_request
@@ -82,7 +114,7 @@ def add_security_headers(response):
         "base-uri 'self'; "
         "form-action 'self'; "
         "frame-ancestors 'self'; "
-        "frame-src https://calendar.google.com https://calendar.app.google; "
+        "frame-src https://calendar.google.com https://calendar.app.google https://www.youtube.com; "
         "img-src 'self' data:; "
         "object-src 'none'; "
         "script-src 'self'; "

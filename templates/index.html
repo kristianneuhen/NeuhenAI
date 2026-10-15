@@ -11,11 +11,8 @@
     acquisition more consistent, focused, and easier to manage.
   </p>
 
-  <div class="video-placeholder" role="img" aria-label="Placeholder for an introduction video">
-    <span>Introduction video</span>
-    <strong>What we do and who this is for</strong>
-    <small>Add your video here later</small>
-  </div>
+  {% set video = videos.introduction %}
+  {% include "_video_embed.html" %}
 
   <form class="consent-form" action="{{ url_for('consent') }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />

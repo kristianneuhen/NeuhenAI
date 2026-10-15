@@ -11,11 +11,8 @@
     You will receive the details from Google Calendar after you finish booking.
   </p>
 
-  <div class="video-placeholder" role="img" aria-label="Placeholder for a booking guidance video">
-    <span>Booking guidance video</span>
-    <strong>How to register for a call</strong>
-    <small>Add your video here later</small>
-  </div>
+  {% set video = videos.booking_guidance %}
+  {% include "_video_embed.html" %}
 
   <ol class="simple-list">
     <li>Open the calendar.</li>
