@@ -34,6 +34,7 @@ def test_valid_consent_unlocks_the_funnel():
 
     unlocked_page = client.get("/how-it-works")
     assert unlocked_page.status_code == 200
+    assert b"Go back" in unlocked_page.data
 
 
 def test_consent_cannot_be_submitted_without_checkbox():

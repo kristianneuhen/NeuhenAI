@@ -20,6 +20,13 @@ a { color: inherit; }
   padding: 22px 24px;
 }
 
+.header-left {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .brand {
   font-size: .95rem;
   font-weight: 800;
@@ -39,6 +46,14 @@ a { color: inherit; }
 }
 
 .step-indicator { margin: 0; }
+
+.back-link {
+  color: #a8adb5;
+  font-size: .8rem;
+  text-decoration: none;
+}
+
+.back-link:hover { color: #f3f4f6; }
 
 .page-shell {
   display: grid;

@@ -9,7 +9,16 @@
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="{{ url_for('index') }}">Neuhen AI</a>
+      <div class="header-left">
+        <a class="brand" href="{{ url_for('index') }}">Neuhen AI</a>
+        {% if step == 2 %}
+        <a class="back-link" href="{{ url_for('index') }}">← Go back</a>
+        {% elif step == 3 %}
+        <a class="back-link" href="{{ url_for('registration') }}">← Go back</a>
+        {% elif step == 4 %}
+        <a class="back-link" href="{{ url_for('book') }}">← Go back</a>
+        {% endif %}
+      </div>
       {% if step %}
       <p class="step-indicator">Step {{ step }} of 4</p>
       {% endif %}
