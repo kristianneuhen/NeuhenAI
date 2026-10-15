@@ -47,6 +47,18 @@ def test_terms_page_contains_the_supplied_terms_and_contact_details():
     assert b"kristianneuhen@gmail.com" in response.data
 
 
+def test_privacy_page_contains_the_supplied_policy_and_contact_details():
+    client = app.test_client()
+
+    response = client.get("/privacy")
+
+    assert response.status_code == 200
+    assert b"1. Introduction" in response.data
+    assert b"10. Contact Us" in response.data
+    assert b"14.10.2026" in response.data
+    assert b"kristianneuhen@gmail.com" in response.data
+
+
 def test_video_settings_are_rendered_as_safe_youtube_embeds():
     client = app.test_client()
 
