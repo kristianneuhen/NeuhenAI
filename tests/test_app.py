@@ -59,6 +59,18 @@ def test_privacy_page_contains_the_supplied_policy_and_contact_details():
     assert b"kristianneuhen@gmail.com" in response.data
 
 
+def test_legal_pages_link_back_to_client_acquisition():
+    client = app.test_client()
+
+    for path in ("/terms", "/privacy"):
+        response = client.get(path)
+
+        assert response.status_code == 200
+        assert b"return back" in response.data
+        assert b"Return back to client acquisition" in response.data
+        assert b'href="/"' in response.data
+
+
 def test_video_settings_are_rendered_as_safe_youtube_embeds():
     client = app.test_client()
 

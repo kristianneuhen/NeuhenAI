@@ -27,10 +27,17 @@
           <p class="step-indicator">Step {{ step }} of 4</p>
           {% endif %}
         </header>
+        {% else %}
+        <header class="site-header site-header--legal">
+          <a class="legal-back-link" href="{{ url_for('index') }}">return back</a>
+        </header>
         {% endif %}
 
         <main class="page-shell">
           {% block content %}{% endblock %}
+          {% if not step %}
+          <a class="legal-return-button" href="{{ url_for('index') }}">Return back to client acquisition</a>
+          {% endif %}
         </main>
 
         <footer class="site-footer">
