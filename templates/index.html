@@ -1,80 +1,35 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="A small Python Docker deployment test." />
-    <title>Clinic Neuhen | CI/CD is live</title>
-    <style>
-      :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-      * { box-sizing: border-box; }
-      body {
-        align-items: center;
-        background: linear-gradient(135deg, #effaf7, #e7efff);
-        color: #16232d;
-        display: flex;
-        justify-content: center;
-        margin: 0;
-        min-height: 100vh;
-        padding: 24px;
-      }
-      main {
-        background: rgba(255, 255, 255, .92);
-        border: 1px solid rgba(22, 35, 45, .1);
-        border-radius: 24px;
-        box-shadow: 0 20px 60px rgba(32, 61, 91, .14);
-        max-width: 560px;
-        padding: 48px;
-        text-align: center;
-        width: 100%;
-      }
-      .eyebrow { color: #167565; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-      h1 { font-size: clamp(2rem, 6vw, 3.25rem); letter-spacing: -.04em; margin: 12px 0; }
-      p { color: #586671; line-height: 1.6; }
-      button {
-        background: #167565;
-        border: 0;
-        border-radius: 12px;
-        color: white;
-        cursor: pointer;
-        font: inherit;
-        font-weight: 700;
-        margin-top: 20px;
-        padding: 14px 22px;
-      }
-      button:hover { background: #105d50; }
-      button:focus-visible { outline: 3px solid #7bcdbc; outline-offset: 3px; }
-      #response { font-weight: 700; min-height: 1.5em; }
-      .count { color: #167565; font-weight: 800; }
-    </style>
-  </head>
-  <body>
-    <main>
-      <div class="eyebrow">Clinic Neuhen</div>
-      <h1>CI/CD is live.</h1>
-      <p>This page was automatically built and deployed from GitHub to Docker on AWS.</p>
-      <button id="hello-button" type="button">Test the Python response</button>
-      <p id="response" role="status" aria-live="polite"></p>
-    </main>
-    <script>
-      const button = document.querySelector("#hello-button");
-      const response = document.querySelector("#response");
+{% extends "base.html" %}
 
-      button.addEventListener("click", async () => {
-        button.disabled = true;
-        button.textContent = "Contacting Python…";
-        try {
-          const result = await fetch("/api/hello", { method: "POST" });
-          if (!result.ok) throw new Error("The server returned an error.");
-          const data = await result.json();
-          response.innerHTML = `${data.message} <span class="count">Click #${data.click_count}</span>`;
-        } catch (error) {
-          response.textContent = "Could not reach the Python service. Please try again.";
-        } finally {
-          button.disabled = false;
-          button.textContent = "Test the Python response";
-        }
-      });
-    </script>
-  </body>
-</html>
+{% block title %}Neuhen AI | Client acquisition{% endblock %}
+
+{% block content %}
+<section class="funnel-card">
+  <p class="eyebrow">AI client acquisition</p>
+  <h1>Build a clearer path to qualified client conversations.</h1>
+  <p class="lead">
+    Neuhen AI helps service businesses use practical AI systems to make client
+    acquisition more consistent, focused, and easier to manage.
+  </p>
+
+  <div class="video-placeholder" role="img" aria-label="Placeholder for an introduction video">
+    <span>Introduction video</span>
+    <strong>What we do and who this is for</strong>
+    <small>Add your video here later</small>
+  </div>
+
+  <form class="consent-form" action="{{ url_for('consent') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <label class="check-row" for="agree">
+      <input id="agree" name="agree" type="checkbox" value="yes" required />
+      <span>
+        I agree to the <a href="{{ url_for('terms') }}">Terms and Conditions</a>
+        and acknowledge the <a href="{{ url_for('privacy') }}">Privacy Policy</a>.
+      </span>
+    </label>
+    {% if consent_error %}
+    <p class="form-error" role="alert">Please agree to both documents before continuing.</p>
+    {% endif %}
+    <button class="button" type="submit">Continue</button>
+  </form>
+</section>
+{% endblock %}

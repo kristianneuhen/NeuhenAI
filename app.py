@@ -1,34 +1,164 @@
 from __future__ import annotations
 
-from flask import Flask, jsonify, render_template
+import hmac
+import os
+import secrets
+from datetime import timedelta
+from functools import wraps
+from urllib.parse import urlparse
+
+from flask import Flask, abort, redirect, render_template, request, session, url_for
+
+
+def _secret_key() -> str:
+    configured_key = os.environ.get("FLASK_SECRET_KEY")
+    if configured_key:
+        return configured_key
+
+    if os.environ.get("FLASK_ENV") == "production":
+        raise RuntimeError("FLASK_SECRET_KEY must be configured in production.")
+
+    # Local development and tests only. Production receives a persistent secret
+    # from the deployment workflow and must never use this fallback.
+    return "local-development-key-not-for-production"
+
+
+def _trusted_google_calendar_url(variable_name: str) -> str | None:
+    candidate = os.environ.get(variable_name, "").strip()
+    if not candidate:
+        return None
+
+    parsed = urlparse(candidate)
+    trusted_hosts = {"calendar.google.com", "calendar.app.google"}
+    if parsed.scheme != "https" or parsed.hostname not in trusted_hosts:
+        return None
+    return candidate
+
 
 app = Flask(__name__)
+app.config.update(
+    SECRET_KEY=_secret_key(),
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=os.environ.get("FLASK_ENV") == "production",
+    PERMANENT_SESSION_LIFETIME=timedelta(hours=24),
+)
 
-# Deliberately in-memory for this first container exercise. It proves that the
-# browser talks to the Python service; it resets whenever the container restarts.
-click_count = 0
+
+def csrf_token() -> str:
+    token = session.get("csrf_token")
+    if not token:
+        token = secrets.token_urlsafe(32)
+        session["csrf_token"] = token
+    return token
+
+
+def validate_csrf() -> None:
+    submitted_token = request.form.get("csrf_token", "")
+    expected_token = session.get("csrf_token", "")
+    if not expected_token or not hmac.compare_digest(submitted_token, expected_token):
+        abort(400)
+
+
+def consent_required(view):
+    @wraps(view)
+    def wrapped_view(*args, **kwargs):
+        if not session.get("terms_accepted"):
+            return redirect(url_for("index"), code=303)
+        return view(*args, **kwargs)
+
+    return wrapped_view
+
+
+@app.context_processor
+def inject_template_values():
+    return {"csrf_token": csrf_token, "terms_accepted": session.get("terms_accepted", False)}
+
+
+@app.after_request
+def add_security_headers(response):
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "base-uri 'self'; "
+        "form-action 'self'; "
+        "frame-ancestors 'self'; "
+        "frame-src https://calendar.google.com https://calendar.app.google; "
+        "img-src 'self' data:; "
+        "object-src 'none'; "
+        "script-src 'self'; "
+        "style-src 'self'"
+    )
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    return response
 
 
 @app.get("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", step=1)
 
 
-@app.post("/api/hello")
-def hello():
-    global click_count
-    click_count += 1
-    return jsonify(
-        {
-            "message": "Hello from the Python container!",
-            "click_count": click_count,
-        }
+@app.post("/consent")
+def consent():
+    validate_csrf()
+    if request.form.get("agree") != "yes":
+        return render_template("index.html", step=1, consent_error=True), 400
+
+    session.permanent = True
+    session["terms_accepted"] = True
+    return redirect(url_for("registration"), code=303)
+
+
+@app.get("/how-it-works")
+@consent_required
+def registration():
+    return render_template("registration.html", step=2)
+
+
+@app.get("/book")
+@consent_required
+def book():
+    booking_url = _trusted_google_calendar_url("GOOGLE_CALENDAR_BOOKING_URL")
+    embed_url = _trusted_google_calendar_url("GOOGLE_CALENDAR_EMBED_URL")
+    return render_template(
+        "book.html",
+        step=3,
+        booking_url=booking_url,
+        embed_url=embed_url,
+        booking_available=bool(booking_url or embed_url),
     )
+
+
+@app.post("/booking-complete")
+@consent_required
+def booking_complete():
+    validate_csrf()
+    session["booking_complete"] = True
+    return redirect(url_for("thanks"), code=303)
+
+
+@app.get("/thanks")
+@consent_required
+def thanks():
+    if not session.get("booking_complete"):
+        return redirect(url_for("book"), code=303)
+    return render_template("thanks.html", step=4)
+
+
+@app.get("/terms")
+def terms():
+    return render_template("terms.html", step=None)
+
+
+@app.get("/privacy")
+def privacy():
+    return render_template("privacy.html", step=None)
 
 
 @app.get("/health")
 def health():
-    return jsonify({"status": "ok"})
+    return {"status": "ok"}
 
 
 if __name__ == "__main__":

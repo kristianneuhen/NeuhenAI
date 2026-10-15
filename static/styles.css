@@ -1,0 +1,150 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #121416;
+  color: #f3f4f6;
+}
+
+* { box-sizing: border-box; }
+
+body { background: #121416; margin: 0; min-height: 100vh; }
+a { color: inherit; }
+
+.site-header,
+.site-footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1040px;
+  padding: 22px 24px;
+}
+
+.brand {
+  font-size: .95rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.step-indicator,
+.site-footer,
+.eyebrow,
+.calendar-label {
+  color: #a8adb5;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.step-indicator { margin: 0; }
+
+.page-shell {
+  display: grid;
+  min-height: calc(100vh - 150px);
+  padding: 32px 24px 48px;
+  place-items: center;
+}
+
+.funnel-card,
+.legal-card {
+  background: #1b1e22;
+  border: 1px solid #32363d;
+  border-radius: 14px;
+  max-width: 700px;
+  padding: clamp(28px, 5vw, 56px);
+  width: 100%;
+}
+
+.funnel-card--wide { max-width: 900px; }
+.eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
+h1, h2, p { margin-top: 0; }
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 4.1rem);
+  letter-spacing: -.045em;
+  line-height: 1.03;
+  margin-bottom: 20px;
+}
+
+h2 { font-size: 1.05rem; margin: 28px 0 10px; }
+p, li { color: #c6c9ce; line-height: 1.65; }
+.lead { font-size: 1.1rem; max-width: 62ch; }
+
+.video-placeholder,
+.calendar-card {
+  background: #262a2f;
+  border: 1px dashed #656b73;
+  border-radius: 10px;
+  display: grid;
+  gap: 8px;
+  margin: 30px 0;
+  min-height: 210px;
+  padding: 28px;
+  place-content: center;
+  text-align: center;
+}
+
+.video-placeholder span,
+.video-placeholder small { color: #a8adb5; }
+.video-placeholder strong { font-size: 1.15rem; }
+.consent-form, .completion-form { margin-top: 28px; }
+
+.check-row {
+  align-items: flex-start;
+  color: #dfe1e5;
+  display: flex;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+.check-row input { accent-color: #f3f4f6; margin-top: 4px; }
+.check-row a, .site-footer a { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+.button {
+  background: #f3f4f6;
+  border: 1px solid #f3f4f6;
+  border-radius: 7px;
+  color: #121416;
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  font-weight: 750;
+  margin-top: 22px;
+  padding: 13px 18px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover { background: #d9dde2; border-color: #d9dde2; }
+.button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #f3f4f6; outline-offset: 3px; }
+.button--secondary { background: transparent; color: #f3f4f6; }
+.button--secondary:hover { background: #2a2e34; }
+.form-error { color: #ffb4ab; margin: 16px 0 0; }
+.simple-list { margin: 26px 0 0; padding-left: 22px; }
+.simple-list li + li { margin-top: 8px; }
+
+.calendar-frame {
+  background: #fff;
+  border: 0;
+  border-radius: 10px;
+  height: 670px;
+  margin-top: 28px;
+  width: 100%;
+}
+
+.calendar-card { min-height: 160px; }
+.calendar-card--pending { border-style: solid; }
+.calendar-card p:last-child { margin-bottom: 0; }
+.legal-card { max-width: 760px; }
+.legal-card h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); }
+.site-footer { justify-content: center; gap: 22px; padding-top: 0; }
+.site-footer a { color: #a8adb5; }
+
+@media (max-width: 560px) {
+  .site-header { padding-bottom: 8px; }
+  .page-shell { padding: 24px 16px 40px; }
+  .funnel-card, .legal-card { padding: 28px 22px; }
+  .calendar-frame { height: 620px; }
+}

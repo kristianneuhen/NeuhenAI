@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Book a call | Neuhen AI{% endblock %}
+
+{% block content %}
+<section class="funnel-card funnel-card--wide">
+  <p class="eyebrow">Book your call</p>
+  <h1>Choose a time that works for you.</h1>
+  <p class="lead">
+    The calendar below is handled by Google Calendar. Your booking details are
+    entered there, rather than stored by this website.
+  </p>
+
+  {% if embed_url %}
+  <iframe
+    class="calendar-frame"
+    src="{{ embed_url }}"
+    title="Google Calendar booking page"
+    referrerpolicy="strict-origin-when-cross-origin"
+  ></iframe>
+  {% elif booking_url %}
+  <div class="calendar-card">
+    <p>Your booking page opens securely in Google Calendar.</p>
+    <a class="button" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
+      Open Google Calendar
+    </a>
+  </div>
+  {% else %}
+  <div class="calendar-card calendar-card--pending">
+    <p class="calendar-label">Calendar setup needed</p>
+    <p>
+      Add the Google Calendar appointment-schedule link before publishing this
+      funnel to clients. Until then, no visitor can submit a booking here.
+    </p>
+  </div>
+  {% endif %}
+
+  {% if booking_available %}
+  <form class="completion-form" action="{{ url_for('booking_complete') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button class="button button--secondary" type="submit">I have completed my booking</button>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}
