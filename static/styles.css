@@ -223,7 +223,8 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   gap: clamp(36px, 7vw, 80px);
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   max-width: 900px;
-  padding: clamp(56px, 10vw, 112px) clamp(28px, 5vw, 56px);
+  margin: 32px 0 48px;
+  padding: clamp(28px, 5vw, 56px);
   width: 100%;
 }
 .contact-details { min-width: 0; }
