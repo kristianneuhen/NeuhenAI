@@ -5,7 +5,13 @@
 {% block content %}
 <section class="contact-layout" aria-labelledby="contact-title">
   <div class="contact-details">
-    <div class="contact-mail-icon" aria-hidden="true">
+    <h1 id="contact-title">Contact us</h1>
+    <p>We are always looking for ways to improve our products and services. Contact us and let us know how we can help you.</p>
+
+    <figure class="contact-map" aria-label="World map">
+      <img src="https://assets.aceternity.com/pro/world.svg" alt="" />
+    </figure>
+    <div class="contact-mail-icon contact-mail-icon--below-map" aria-hidden="true">
       <div class="contact-mail-icon__surface">
         <svg viewBox="0 0 24 24" focusable="false">
           <path d="M3.5 6.5h17v11h-17z" />
@@ -16,12 +22,6 @@
       <span class="contact-mail-icon__line contact-mail-icon__line--sharp"></span>
       <span class="contact-mail-icon__line contact-mail-icon__line--soft"></span>
     </div>
-    <h1 id="contact-title">Contact us</h1>
-    <p>We are always looking for ways to improve our products and services. Contact us and let us know how we can help you.</p>
-
-    <figure class="contact-map" aria-label="World map">
-      <img src="https://assets.aceternity.com/pro/world.svg" alt="" />
-    </figure>
   </div>
 
   <form class="contact-form" action="{{ url_for('contact_submit') }}" method="post">
