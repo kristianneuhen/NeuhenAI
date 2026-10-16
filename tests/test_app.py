@@ -45,6 +45,7 @@ def test_terms_page_contains_the_supplied_terms_and_contact_details():
     assert b"1. Use of Our Website and Services" in response.data
     assert b"12. Contact Us" in response.data
     assert b"kristianneuhen@gmail.com" in response.data
+    assert b"Website: clinicsneuhen.com" not in response.data
 
 
 def test_privacy_page_contains_the_supplied_policy_and_contact_details():
@@ -57,6 +58,7 @@ def test_privacy_page_contains_the_supplied_policy_and_contact_details():
     assert b"10. Contact Us" in response.data
     assert b"14.10.2026" in response.data
     assert b"kristianneuhen@gmail.com" in response.data
+    assert b"Website: clinicsneuhen.com" not in response.data
 
 
 def test_faq_page_has_accordion_and_footer_link():
@@ -96,6 +98,7 @@ def test_contact_page_has_the_requested_secure_form_and_static_map():
     assert b"mailto:" not in response.data
     assert b'name="phone"' in response.data
     assert b'name="company"' not in response.data
+    assert b"Your details are used only to respond to this request." not in response.data
     assert b"contact-map__beacon" not in response.data
     assert b"We are here" not in response.data
     assert b"kristianneuhen@gmail.com" not in response.data
