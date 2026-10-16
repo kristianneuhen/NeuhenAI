@@ -230,10 +230,8 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 .contact-details > p { max-width: 48ch; }
 .contact-mail-icon {
   align-items: center;
-  background: linear-gradient(180deg, #2b2b2b, #1d1d1d);
+  background: linear-gradient(180deg, #262626, #0a0a0a);
   border-radius: 6px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 8px 18px rgba(0, 0, 0, .26);
-  color: #2f80ed;
   display: flex;
   height: 56px;
   justify-content: center;
@@ -242,15 +240,40 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   position: relative;
   width: 56px;
 }
-.contact-mail-icon::after {
+.contact-mail-icon__surface {
+  align-items: center;
+  background: #262626;
+  border-radius: 5px;
+  color: #2f80ed;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+.contact-mail-icon__glow {
+  background: #525252;
+  border-radius: 999px;
+  bottom: 0;
+  height: 16px;
+  left: 0;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+  filter: blur(10px);
+}
+.contact-mail-icon__line {
   background: linear-gradient(90deg, transparent, #2f80ed, transparent);
   bottom: 0;
-  content: "";
   height: 1px;
   left: 20%;
   position: absolute;
   width: 60%;
+  z-index: 4;
 }
+.contact-mail-icon__line--soft { filter: blur(4px); height: 8px; }
 .contact-mail-icon svg { fill: none; height: 26px; stroke: currentColor; stroke-linejoin: round; stroke-width: 2; width: 26px; }
 .contact-map {
   margin: 50px 0 0;
@@ -264,55 +287,62 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   width: 100%;
 }
 .contact-form {
-  background: linear-gradient(180deg, #181818, #101010);
+  background: linear-gradient(180deg, #171717, #0a0a0a);
   border-radius: 18px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(22px, 4vw, 40px);
   position: relative;
 }
-.contact-form::before {
+.contact-form__pattern {
+  height: 100%;
+  left: 50%;
+  margin-left: -80px;
+  margin-top: -8px;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+.contact-form__pattern::before {
   background-image:
-    linear-gradient(rgba(255, 255, 255, .075) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .075) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, .11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .11) 1px, transparent 1px);
   background-size: 20px 20px;
   content: "";
-  height: 58%;
-  mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
-  opacity: .72;
+  inset: 0;
+  mask-image: radial-gradient(farthest-side at top, #000 0%, transparent 100%);
+  opacity: .35;
   position: absolute;
-  right: 0;
-  top: 0;
-  width: 72%;
-  z-index: 0;
 }
-.contact-form::after {
+.contact-form__pattern span {
   background: rgba(255, 255, 255, .07);
-  box-shadow: 0 20px rgba(255, 255, 255, .07), 20px 20px rgba(255, 255, 255, .07), 20px 40px rgba(255, 255, 255, .07);
-  content: "";
+  box-shadow: 0 20px rgba(255, 255, 255, .07), 20px 20px rgba(255, 255, 255, .07), 20px 40px rgba(255, 255, 255, .07), 40px 60px rgba(255, 255, 255, .07);
   height: 20px;
   position: absolute;
-  right: 86px;
-  top: 20px;
+  right: 70px;
+  top: 26px;
   width: 20px;
-  z-index: 0;
 }
-.contact-form > * { position: relative; z-index: 1; }
-.contact-field { display: grid; gap: 8px; }
-.contact-field label { color: #d1d5db; font-size: .875rem; font-weight: 600; }
+.contact-form > :not(.contact-form__pattern):not(.contact-honeypot) { position: relative; z-index: 1; }
+.contact-field { display: grid; gap: 0; margin-bottom: 16px; }
+.contact-field label { color: #d1d5db; display: inline-block; font-size: .875rem; font-weight: 500; margin-bottom: 8px; }
 .contact-field input,
 .contact-field textarea {
   background: #262626;
-  border: 1px solid #303030;
+  border: 1px solid transparent;
   border-radius: 6px;
   color: #f3f4f6;
-  font: inherit;
-  padding: 11px 13px;
+  font-size: .875rem;
+  line-height: 1.25;
   resize: vertical;
 }
+.contact-field input { height: 40px; padding: 0 16px; }
+.contact-field textarea { min-height: 147px; padding: 16px; }
 .contact-field input:focus,
 .contact-field textarea:focus { border-color: #a8adb5; outline: 2px solid #a8adb5; outline-offset: 2px; }
 .contact-honeypot { left: -10000px; position: absolute; }

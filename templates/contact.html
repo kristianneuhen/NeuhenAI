@@ -6,10 +6,15 @@
 <section class="contact-layout" aria-labelledby="contact-title">
   <div class="contact-details">
     <div class="contact-mail-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" focusable="false">
-        <path d="M3.5 6.5h17v11h-17z" />
-        <path d="m4 7 8 6 8-6" />
-      </svg>
+      <div class="contact-mail-icon__surface">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M3.5 6.5h17v11h-17z" />
+          <path d="m4 7 8 6 8-6" />
+        </svg>
+      </div>
+      <span class="contact-mail-icon__glow"></span>
+      <span class="contact-mail-icon__line contact-mail-icon__line--sharp"></span>
+      <span class="contact-mail-icon__line contact-mail-icon__line--soft"></span>
     </div>
     <h1 id="contact-title">Contact us</h1>
     <p>We are always looking for ways to improve our products and services. Contact us and let us know how we can help you.</p>
@@ -20,6 +25,7 @@
   </div>
 
   <form class="contact-form" action="{{ url_for('contact_submit') }}" method="post">
+    <div class="contact-form__pattern" aria-hidden="true"><span></span></div>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <div class="contact-honeypot" aria-hidden="true">
       <label for="website">Website</label>
