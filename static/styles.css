@@ -239,7 +239,7 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   position: relative;
   width: 56px;
 }
-.contact-mail-icon--below-map { margin: 30px auto 0; }
+.contact-mail-icon--below-map { margin: 100px auto 0; }
 .contact-mail-icon__surface {
   align-items: center;
   background: #262626;
