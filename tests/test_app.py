@@ -59,6 +59,18 @@ def test_privacy_page_contains_the_supplied_policy_and_contact_details():
     assert b"kristianneuhen@gmail.com" in response.data
 
 
+def test_faq_page_has_accordion_and_footer_link():
+    client = app.test_client()
+
+    response = client.get("/faq")
+
+    assert response.status_code == 200
+    assert b"Frequently asked questions" in response.data
+    assert b'class="faq-trigger"' in response.data
+    assert b"faq.js" in response.data
+    assert b'href="/faq">FAQ</a>' in response.data
+
+
 def test_legal_pages_link_to_the_main_page_without_a_header_logo():
     client = app.test_client()
 

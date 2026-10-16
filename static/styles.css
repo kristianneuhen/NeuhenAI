@@ -218,6 +218,44 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 .site-footer { justify-content: center; gap: 22px; padding-top: 0; }
 .site-footer a { color: #a8adb5; }
 
+.faq-layout {
+  display: grid;
+  gap: clamp(36px, 7vw, 80px);
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  max-width: 1120px;
+  padding: clamp(28px, 5vw, 72px);
+  width: 100%;
+}
+.faq-heading { align-self: start; }
+.faq-heading h1 { margin-bottom: 0; }
+.faq-list { border-top: 1px solid #32363d; }
+.faq-item { border-bottom: 1px solid #32363d; }
+.faq-item h2 { margin: 0; }
+.faq-trigger {
+  align-items: flex-start;
+  background: transparent;
+  border: 0;
+  color: #d1d5db;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: 16px;
+  padding: 16px 0;
+  text-align: left;
+  width: 100%;
+}
+.faq-trigger:focus-visible { outline: 3px solid #f3f4f6; outline-offset: 3px; }
+.faq-question { font-size: 1.05rem; font-weight: 600; line-height: 1.45; }
+.faq-icon { color: #2f80ed; flex: 0 0 24px; height: 24px; margin-top: 1px; position: relative; width: 24px; }
+.faq-icon svg { inset: 0; position: absolute; transition: opacity .2s, transform .2s; }
+.faq-icon__minus { opacity: 0; transform: rotate(90deg) scale(0); }
+.faq-item.is-open .faq-icon__plus { opacity: 0; transform: rotate(90deg) scale(0); }
+.faq-item.is-open .faq-icon__minus { opacity: 1; transform: rotate(0) scale(1); }
+.faq-answer { display: grid; grid-template-rows: 0fr; overflow: hidden; transition: grid-template-rows .2s ease-out; }
+.faq-answer > div { min-height: 0; }
+.faq-answer p { margin: 0 0 16px 40px; }
+.faq-item.is-open .faq-answer { grid-template-rows: 1fr; }
+
 .contact-layout {
   display: grid;
   gap: clamp(36px, 7vw, 80px);
@@ -288,6 +326,7 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   .page-shell { padding: 24px 16px 40px; }
   .funnel-card, .legal-card { padding: 28px 22px; }
   .calendar-frame { height: 620px; }
+  .faq-layout { grid-template-columns: 1fr; padding: 28px 22px; }
   .contact-layout { grid-template-columns: 1fr; }
   .contact-map { margin-top: 32px; }
 }

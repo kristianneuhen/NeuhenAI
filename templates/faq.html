@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Frequently Asked Questions | Neuhen AI{% endblock %}
+
+{% block content %}
+<section class="faq-layout" aria-labelledby="faq-title">
+  <div class="faq-heading">
+    <h1 id="faq-title">Frequently asked questions</h1>
+  </div>
+
+  <div class="faq-list">
+    <article class="faq-item">
+      <h2><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-1"><span class="faq-icon" aria-hidden="true"><svg class="faq-icon__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg><svg class="faq-icon__minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14" /></svg></span><span class="faq-question">What does Neuhen AI help with?</span></button></h2>
+      <div class="faq-answer" id="faq-answer-1"><div><p>Neuhen AI helps service businesses use practical AI systems to make client acquisition more consistent, focused, and easier to manage.</p></div></div>
+    </article>
+    <article class="faq-item">
+      <h2><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-2"><span class="faq-icon" aria-hidden="true"><svg class="faq-icon__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg><svg class="faq-icon__minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14" /></svg></span><span class="faq-question">Who is this for?</span></button></h2>
+      <div class="faq-answer" id="faq-answer-2"><div><p>This is for service businesses that want a clearer, more repeatable process for generating and qualifying client conversations.</p></div></div>
+    </article>
+    <article class="faq-item">
+      <h2><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-3"><span class="faq-icon" aria-hidden="true"><svg class="faq-icon__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg><svg class="faq-icon__minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14" /></svg></span><span class="faq-question">Do I need technical knowledge?</span></button></h2>
+      <div class="faq-answer" id="faq-answer-3"><div><p>No. The initial conversation is intended to understand your business and determine whether a practical AI approach is a good fit.</p></div></div>
+    </article>
+    <article class="faq-item">
+      <h2><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-4"><span class="faq-icon" aria-hidden="true"><svg class="faq-icon__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg><svg class="faq-icon__minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14" /></svg></span><span class="faq-question">What happens after I get in touch?</span></button></h2>
+      <div class="faq-answer" id="faq-answer-4"><div><p>We review the details you provide and respond to your request. You can also use the booking flow to arrange a conversation.</p></div></div>
+    </article>
+    <article class="faq-item">
+      <h2><button class="faq-trigger" type="button" aria-expanded="false" aria-controls="faq-answer-5"><span class="faq-icon" aria-hidden="true"><svg class="faq-icon__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg><svg class="faq-icon__minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14" /></svg></span><span class="faq-question">How is my information used?</span></button></h2>
+      <div class="faq-answer" id="faq-answer-5"><div><p>Your contact details are used only to respond to your request. Please see the Privacy page for the full policy.</p></div></div>
+    </article>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='faq.js') }}" defer></script>
+{% endblock %}

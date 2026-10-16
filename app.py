@@ -360,6 +360,11 @@ def privacy():
     return render_template("privacy.html", step=None)
 
 
+@app.get("/faq")
+def faq():
+    return render_template("faq.html", step=None)
+
+
 @app.get("/contact")
 def contact():
     return render_template("contact.html", step=None, sent=request.args.get("sent") == "1")
