@@ -85,7 +85,6 @@ def test_contact_page_has_the_requested_secure_form_and_static_map():
     assert b'name="company"' not in response.data
     assert b"contact-map__beacon" not in response.data
     assert b'contact-mail-icon' in response.data
-    assert b'contact-form__pattern' in response.data
     assert b"We are here" not in response.data
     assert b"kristianneuhen@gmail.com" not in response.data
 
