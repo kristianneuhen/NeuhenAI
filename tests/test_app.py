@@ -28,6 +28,17 @@ def test_funnel_pages_use_the_shared_frame_with_the_ambient_background():
     assert b"background.js" in response.data
 
 
+def test_homepage_uses_the_updated_hero_copy_and_accent():
+    client = app.test_client()
+
+    response = client.get("/")
+
+    assert b"Welcome to the future" in response.data
+    assert b"Welcome to the era of" in response.data
+    assert b"AI client acquisition" in response.data
+    assert b"Neuhen AI helps businesses use practical AI systems" in response.data
+
+
 def test_global_neuhen_brand_label_is_removed_from_the_funnel_header():
     client = app.test_client()
 
