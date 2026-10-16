@@ -107,7 +107,11 @@ a { color: inherit; }
 }
 
 .funnel-card--wide { max-width: 900px; }
-.hero-copy { background: #000; padding: clamp(24px, 4vw, 48px); }
+.hero-copy {
+  background: #000;
+  margin: calc(-1 * clamp(28px, 5vw, 56px)) calc(-1 * clamp(28px, 5vw, 56px)) 30px;
+  padding: clamp(28px, 5vw, 56px);
+}
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: .875rem; font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-weight: 500; letter-spacing: -.05em; }
@@ -342,6 +346,7 @@ body:has(.faq-layout) { display: grid; place-items: center; }
   .site-header { padding-bottom: 8px; }
   .page-shell { padding: 24px 16px 40px; }
   .funnel-card, .legal-card { padding: 28px 22px; }
+  .hero-copy { margin: -28px -22px 30px; padding: 28px 22px; }
   .calendar-frame { height: 620px; }
   .faq-layout { grid-template-columns: 1fr; min-height: 560px; padding: 28px 22px; }
   .contact-layout { grid-template-columns: 1fr; }
