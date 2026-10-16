@@ -11,7 +11,7 @@ body {
   background: #000;
   margin: 0;
   min-height: 100vh;
-  padding: clamp(10px, 2vw, 28px);
+  padding: clamp(20px, 4vw, 56px);
 }
 a { color: inherit; }
 
@@ -282,7 +282,7 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 .contact-note { color: #a8adb5; font-size: .8rem; margin: 0; }
 
 @media (max-width: 560px) {
-  body { padding: 8px; }
+  body { padding: 16px; }
   .site-frame { border-radius: 18px; }
   .site-header { padding-bottom: 8px; }
   .page-shell { padding: 24px 16px 40px; }
