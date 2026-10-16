@@ -17,6 +17,8 @@
   let dots = [];
   let animationFrame = 0;
   let isVisible = !document.hidden;
+  let canvasWidth = 0;
+  let canvasHeight = 0;
 
   function createDots(width, height) {
     const createdDots = [];
@@ -51,8 +53,10 @@
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = document.documentElement.clientWidth;
+    const height = Math.max(document.documentElement.scrollHeight, window.innerHeight);
+    canvasWidth = width;
+    canvasHeight = height;
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
     canvas.style.width = `${width}px`;
@@ -71,8 +75,8 @@
   function draw(timestamp) {
     if (!isVisible) return;
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = canvasWidth;
+    const height = canvasHeight;
     context.clearRect(0, 0, width, height);
     const time = timestamp * 0.001;
 
@@ -113,7 +117,7 @@
 
   function updateMouse(event) {
     mouse.x = event.clientX;
-    mouse.y = event.clientY;
+    mouse.y = event.clientY + window.scrollY;
     if (mouse.previousX < 0) {
       mouse.previousX = mouse.x;
       mouse.previousY = mouse.y;
@@ -132,6 +136,9 @@
   window.addEventListener("resize", resize, { passive: true });
   window.addEventListener("pointermove", updateMouse, { passive: true });
   document.addEventListener("visibilitychange", handleVisibility);
+  if (window.ResizeObserver) {
+    new ResizeObserver(resize).observe(document.body);
+  }
   resize();
   animationFrame = window.requestAnimationFrame(draw);
 })();
