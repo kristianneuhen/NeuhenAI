@@ -228,53 +228,6 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 }
 .contact-details { min-width: 0; }
 .contact-details > p { max-width: 48ch; }
-.contact-mail-icon {
-  align-items: center;
-  background: linear-gradient(180deg, #262626, #0a0a0a);
-  border-radius: 6px;
-  display: flex;
-  height: 56px;
-  justify-content: center;
-  padding: 4px;
-  position: relative;
-  width: 56px;
-}
-.contact-mail-icon--below-map { margin: 100px auto 0; }
-.contact-mail-icon__surface {
-  align-items: center;
-  background: #262626;
-  border-radius: 5px;
-  color: #2f80ed;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  z-index: 2;
-}
-.contact-mail-icon__glow {
-  background: #525252;
-  border-radius: 999px;
-  bottom: 0;
-  height: 16px;
-  left: 0;
-  opacity: .5;
-  position: absolute;
-  width: 100%;
-  z-index: 3;
-  filter: blur(10px);
-}
-.contact-mail-icon__line {
-  background: linear-gradient(90deg, transparent, #2f80ed, transparent);
-  bottom: 0;
-  height: 1px;
-  left: 20%;
-  position: absolute;
-  width: 60%;
-  z-index: 4;
-}
-.contact-mail-icon__line--soft { filter: blur(4px); height: 8px; }
-.contact-mail-icon svg { fill: none; height: 26px; stroke: currentColor; stroke-linejoin: round; stroke-width: 2; width: 26px; }
 .contact-map {
   margin: 50px 0 0;
   max-width: 510px;
