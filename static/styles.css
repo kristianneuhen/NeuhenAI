@@ -107,6 +107,7 @@ a { color: inherit; }
 }
 
 .funnel-card--wide { max-width: 900px; }
+.hero-copy { background: #000; padding: clamp(24px, 4vw, 48px); }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: .875rem; font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-weight: 500; letter-spacing: -.05em; }
