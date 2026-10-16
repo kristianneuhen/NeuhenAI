@@ -92,6 +92,7 @@ def test_contact_page_has_the_requested_secure_form_and_static_map():
 
     assert response.status_code == 200
     assert b'action="/contact"' in response.data
+    assert b">Contact <span class=\"contact-brand\">Neuhen AI</span><" in response.data
     assert b"mailto:" not in response.data
     assert b'name="phone"' in response.data
     assert b'name="company"' not in response.data

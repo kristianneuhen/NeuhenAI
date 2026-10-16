@@ -266,6 +266,12 @@ body:has(.faq-layout) { display: grid; place-items: center; }
   padding: clamp(28px, 5vw, 56px);
   width: 100%;
 }
+.contact-brand {
+  color: #6366f1;
+  display: block;
+  font-size: 1.08em;
+  letter-spacing: -.045em;
+}
 .contact-details { min-width: 0; }
 .contact-details > p { max-width: 48ch; }
 .contact-map {
