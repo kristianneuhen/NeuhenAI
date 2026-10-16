@@ -10,6 +10,7 @@
   </head>
   <body>
     <canvas id="ambient-background" aria-hidden="true"></canvas>
+    {% block outside_content %}{% endblock %}
     <div class="site-frame">
       <div class="site-frame__canvas">
         {% if step %}
