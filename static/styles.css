@@ -215,6 +215,7 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 .legal-list { color: #c6c9ce; line-height: 1.65; margin: 0; padding-left: 22px; }
 .legal-contact { color: #c6c9ce; font-style: normal; line-height: 1.65; text-align: center; }
 .legal-contact a { color: inherit; }
+.legal-form-link { text-decoration: underline; text-underline-offset: 3px; }
 .site-footer { justify-content: center; gap: 22px; padding-top: 0; }
 .site-footer a { color: #a8adb5; }
 

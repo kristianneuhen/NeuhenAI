@@ -46,6 +46,7 @@ def test_terms_page_contains_the_supplied_terms_and_contact_details():
     assert b"12. Contact Us" in response.data
     assert b"kristianneuhen@gmail.com" in response.data
     assert b"Website: clinicsneuhen.com" not in response.data
+    assert b'href="/contact">Contact Us</a>' in response.data
 
 
 def test_privacy_page_contains_the_supplied_policy_and_contact_details():
@@ -59,6 +60,7 @@ def test_privacy_page_contains_the_supplied_policy_and_contact_details():
     assert b"14.10.2026" in response.data
     assert b"kristianneuhen@gmail.com" in response.data
     assert b"Website: clinicsneuhen.com" not in response.data
+    assert b'href="/contact">Contact Us</a>' in response.data
 
 
 def test_faq_page_has_accordion_and_footer_link():
