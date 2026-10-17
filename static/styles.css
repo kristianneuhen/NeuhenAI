@@ -15,6 +15,8 @@ body {
 }
 a { color: inherit; }
 
+body:has(.hero-outside) { padding: 0; }
+
 #ambient-background {
   inset: 0;
   pointer-events: none;
