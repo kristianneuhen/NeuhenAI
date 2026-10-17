@@ -111,13 +111,20 @@ a { color: inherit; }
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100vh;
   margin: 0 auto;
   max-width: 960px;
-  min-height: 100svh;
+  min-height: 100vh;
   padding: 84px 24px 108px;
   position: relative;
   z-index: 1;
   width: 100%;
+}
+@supports (height: 100svh) {
+  .hero-outside { height: 100svh; min-height: 100svh; }
+}
+@supports (height: 100dvh) {
+  .hero-outside { height: 100dvh; min-height: 100dvh; }
 }
 .hero-outside > * { position: relative; z-index: 10; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
