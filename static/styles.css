@@ -116,6 +116,8 @@ a { color: inherit; }
   max-width: 960px;
   min-height: 100svh;
   padding: 84px 24px 108px;
+  position: relative;
+  z-index: 1;
   width: 100%;
 }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
