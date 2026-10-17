@@ -107,7 +107,17 @@ a { color: inherit; }
 }
 
 .funnel-card--wide { max-width: 900px; }
-.hero-outside { margin: 0 auto; max-width: 960px; padding: 84px 24px 108px; width: 100%; }
+.hero-outside {
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 960px;
+  min-height: 100svh;
+  padding: 84px 24px 108px;
+  width: 100%;
+}
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: .875rem; font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-weight: 500; letter-spacing: -.05em; }
