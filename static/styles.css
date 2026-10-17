@@ -119,6 +119,7 @@ a { color: inherit; }
   z-index: 1;
   width: 100%;
 }
+.hero-outside > * { position: relative; z-index: 10; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: .875rem; font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-weight: 500; letter-spacing: -.05em; }
