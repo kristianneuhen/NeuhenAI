@@ -36,7 +36,7 @@ def test_homepage_uses_the_updated_hero_copy_and_accent():
     assert b"Welcome to the future" in response.data
     assert b"Welcome to the era of" in response.data
     assert b"AI client acquisition" in response.data
-    assert b"Neuhen AI helps businesses use practical AI systems" in response.data
+    assert b"Neuhen AI helps businesses reach clients with our AI systems" in response.data
 
 
 def test_global_neuhen_brand_label_is_removed_from_the_funnel_header():
