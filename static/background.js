@@ -3,6 +3,7 @@
 
   const canvas = document.getElementById("ambient-background");
   if (!canvas) return;
+  const hero = document.querySelector(".hero-outside");
 
   const context = canvas.getContext("2d");
   if (!context) return;
@@ -75,8 +76,18 @@
     const height = window.innerHeight;
     context.clearRect(0, 0, width, height);
     const time = timestamp * 0.001;
+    const heroRect = hero ? hero.getBoundingClientRect() : null;
 
     for (const dot of dots) {
+      if (
+        heroRect &&
+        dot.baseX >= heroRect.left &&
+        dot.baseX <= heroRect.right &&
+        dot.baseY >= heroRect.top &&
+        dot.baseY <= heroRect.bottom
+      ) {
+        continue;
+      }
       const dx = mouse.x - dot.baseX;
       const dy = mouse.y - dot.baseY;
       const distance = Math.hypot(dx, dy);

@@ -108,7 +108,6 @@ a { color: inherit; }
 
 .funnel-card--wide { max-width: 900px; }
 .hero-outside {
-  background: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;
