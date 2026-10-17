@@ -5,12 +5,25 @@
 {% block outside_content %}
 <section class="hero-outside" aria-labelledby="hero-title">
   <p class="eyebrow hero-eyebrow">Welcome to the future</p>
-  <h1 id="hero-title" class="hero-title">Welcome to the era of <span>AI client acquisition</span></h1>
+  <h1 id="hero-title" class="hero-title hero-typewriter" aria-label="Welcome to the era of AI client acquisition">
+    <span class="typewriter-word">Welcome</span>
+    <span class="typewriter-word">to</span>
+    <span class="typewriter-word">the</span>
+    <span class="typewriter-word">era</span>
+    <span class="typewriter-word">of</span>
+    <span class="typewriter-word typewriter-accent">AI</span>
+    <span class="typewriter-word typewriter-accent">client</span>
+    <span class="typewriter-word typewriter-accent">acquisition</span>
+  </h1>
   <p class="lead">
     Neuhen AI helps businesses reach clients with our AI systems. Get
     qualified leads tailored to your needs and grow your business.
   </p>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='hero-typewriter.js') }}" defer></script>
 {% endblock %}
 
 {% block content %}
