@@ -142,31 +142,25 @@ body:has(.hero-outside) { padding: 0; }
 .hero-title + .lead { margin-left: auto; margin-right: auto; }
 .hero-cta {
   align-items: center;
-  background: linear-gradient(to top, #10b981, #14b8a6);
-  border-radius: 8px;
+  background: linear-gradient(to top, #4f46e5, #6366f1);
+  border-radius: 9999px;
   bottom: clamp(100px, 14vh, 170px);
-  box-shadow: inset 0 0 10px 0 rgba(255, 255, 255, .2);
-  color: #000;
+  box-shadow: inset 0 .5px 1px 0 #a5b4fc;
+  color: #fff;
   display: inline-flex;
-  font-size: clamp(1.25rem, 2vw, 1.4rem);
+  font-size: 1rem;
   font-weight: 500;
   justify-content: center;
   left: 50%;
-  outline: 1px solid rgba(16, 185, 129, .4);
-  outline-offset: 2px;
-  padding: 10px 24px;
+  padding: 16px 24px;
   position: absolute;
   text-decoration: none;
   transform: translateX(-50%);
   transition: all .2s;
   z-index: 10;
 }
-.hero-cta:hover {
-  box-shadow: inset 0 0 20px 0 #14b8a6;
-  outline-color: rgba(20, 184, 166, .6);
-}
 .hero-cta:active { transform: translateX(-50%) scale(.98); }
-.hero-cta:focus-visible { outline: 2px solid #5eead4; outline-offset: 4px; }
+.hero-cta:focus-visible { outline: 2px solid #a5b4fc; outline-offset: 4px; }
 h1, h2, p { margin-top: 0; }
 
 h1 {
