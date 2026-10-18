@@ -10,29 +10,10 @@
     Neuhen AI helps businesses reach clients with our AI systems. Get
     qualified leads tailored to your needs and grow your business.
   </p>
-  <a class="hero-cta" href="{{ url_for('contact') }}">Start a free trial</a>
+  <a class="hero-cta" href="{{ url_for('acquire') }}">Acquire new clients</a>
 </section>
 {% endblock %}
 
 {% block content %}
-<section class="funnel-card">
-
-  {% set video = videos.introduction %}
-  {% include "_video_embed.html" %}
-
-  <form class="consent-form" action="{{ url_for('consent') }}" method="post">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    <label class="check-row" for="agree">
-      <input id="agree" name="agree" type="checkbox" value="yes" required />
-      <span>
-        I agree to the <a href="{{ url_for('terms') }}">Terms and Conditions</a>
-        and acknowledge the <a href="{{ url_for('privacy') }}">Privacy Policy</a>.
-      </span>
-    </label>
-    {% if consent_error %}
-    <p class="form-error" role="alert">Please agree to both documents before continuing.</p>
-    {% endif %}
-    <button class="button" type="submit">Continue</button>
-  </form>
-</section>
+{% include "_acquisition_panel.html" %}
 {% endblock %}

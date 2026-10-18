@@ -301,6 +301,11 @@ def index():
     return render_template("index.html", step=1)
 
 
+@app.get("/acquire")
+def acquire():
+    return render_template("acquire.html", step=1)
+
+
 @app.post("/consent")
 def consent():
     validate_csrf()
