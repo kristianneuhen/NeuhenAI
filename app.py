@@ -298,7 +298,7 @@ def add_security_headers(response):
 
 @app.get("/")
 def index():
-    return render_template("index.html", step=1)
+    return render_template("index.html", step=None)
 
 
 @app.get("/acquire")
@@ -310,7 +310,7 @@ def acquire():
 def consent():
     validate_csrf()
     if request.form.get("agree") != "yes":
-        return render_template("index.html", step=1, consent_error=True), 400
+        return render_template("acquire.html", step=1, consent_error=True), 400
 
     session.permanent = True
     session["terms_accepted"] = True
