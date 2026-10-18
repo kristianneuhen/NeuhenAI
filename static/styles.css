@@ -86,11 +86,11 @@ body:has(.hero-outside) { padding: 0; }
   text-transform: uppercase;
 }
 
-.step-indicator { font-size: .875rem; margin: 0; }
+.step-indicator { font-size: .84rem; margin: 0; }
 
 .back-link {
   color: #a8adb5;
-  font-size: .875rem;
+  font-size: .84rem;
   text-decoration: none;
 }
 
