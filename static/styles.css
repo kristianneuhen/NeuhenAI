@@ -143,22 +143,23 @@ body:has(.hero-outside) { padding: 0; }
 .hero-cta {
   align-items: center;
   background: linear-gradient(to top, #10b981, #14b8a6);
-  border: 1px solid rgba(16, 185, 129, .4);
   border-radius: 8px;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, .2), 0 0 0 2px rgba(5, 150, 105, .45);
-  color: #fff;
+  box-shadow: inset 0 0 10px 0 rgba(255, 255, 255, .2);
+  color: #000;
   display: inline-flex;
   font-size: 1rem;
   font-weight: 500;
   justify-content: center;
   margin-top: 28px;
+  outline: 1px solid rgba(16, 185, 129, .4);
+  outline-offset: 2px;
   padding: 10px 24px;
   text-decoration: none;
-  transition: box-shadow .2s, transform .2s;
+  transition: all .2s;
 }
 .hero-cta:hover {
-  box-shadow: inset 0 0 20px rgba(20, 184, 166, .8), 0 0 0 2px rgba(20, 184, 166, .6);
-  transform: translateY(-1px);
+  box-shadow: inset 0 0 20px 0 #14b8a6;
+  outline-color: rgba(20, 184, 166, .6);
 }
 .hero-cta:active { transform: scale(.98); }
 .hero-cta:focus-visible { outline: 2px solid #5eead4; outline-offset: 4px; }
