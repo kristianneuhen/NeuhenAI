@@ -133,9 +133,9 @@ body:has(.hero-outside) { padding: 0; }
 .hero-outside > .hero-title,
 .hero-outside > .lead { width: 100%; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
-.hero-eyebrow { color: #4f46e5; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 500; letter-spacing: .01em; }
+.hero-eyebrow { color: #6366f1; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-size: clamp(2.8rem, 6.5vw, 5.4rem); font-weight: 500; letter-spacing: -.05em; }
-.hero-title span { color: #4f46e5; }
+.hero-title span { color: #6366f1; }
 .hero-eyebrow,
 .hero-title,
 .hero-title + .lead { text-align: center; }
@@ -321,7 +321,7 @@ body:has(.faq-layout) { display: grid; place-items: center; }
   width: 100%;
 }
 .contact-brand {
-  color: #4f46e5;
+  color: #6366f1;
   display: block;
   font-size: 1.08em;
   letter-spacing: -.045em;
