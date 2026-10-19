@@ -133,6 +133,18 @@ body:has(.hero-outside) { padding: 0; }
 .hero-outside > * { position: relative; z-index: 10; }
 .hero-outside > .hero-title,
 .hero-outside > .lead { width: 100%; }
+.acquire-intro {
+  margin: 0 auto;
+  max-width: 1100px;
+  padding: clamp(64px, 9vh, 120px) 24px clamp(36px, 5vh, 68px);
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+.acquire-intro .hero-title,
+.acquire-intro .lead { margin-left: auto; margin-right: auto; }
+.acquire-intro .hero-title { color: #f3f4f6; max-width: 1050px; }
+.acquire-intro .lead { max-width: 62ch; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-size: clamp(2.8rem, 6.5vw, 5.4rem); font-weight: 500; letter-spacing: -.05em; }
