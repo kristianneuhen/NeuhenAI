@@ -336,6 +336,7 @@ def book():
         booking_url=booking_url,
         embed_url=embed_url,
         booking_available=bool(booking_url or embed_url),
+        booking_error=request.args.get("booking_error") == "1",
     )
 
 
@@ -343,6 +344,8 @@ def book():
 @consent_required
 def booking_complete():
     validate_csrf()
+    if request.form.get("booking_confirmed") != "yes":
+        return redirect(url_for("book", booking_error="1"), code=303)
     session["booking_complete"] = True
     return redirect(url_for("thanks"), code=303)
 
