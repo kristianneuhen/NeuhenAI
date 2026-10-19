@@ -174,7 +174,7 @@ body:has(.hero-outside) { padding: 0; }
 .acquire-intro .hero-title + .lead { text-align: left !important; }
 .funnel-card--acquire .video-embed { margin-top: 10px; }
 .registration-intro + .video-embed { margin-top: 10px; }
-.registration-intro { margin-top: clamp(120px, 11vw, 210px); }
+.registration-intro { margin-top: clamp(7px, calc(11vw - 149px), 52px); }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-size: clamp(2.8rem, 6.5vw, 5.4rem); font-weight: 500; letter-spacing: -.05em; }
