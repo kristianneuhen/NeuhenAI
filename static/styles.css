@@ -175,8 +175,17 @@ body:has(.hero-outside) { padding: 0; }
 .funnel-card--acquire .video-embed { margin-top: 10px; }
 .registration-intro + .video-embed { margin-top: 10px; }
 .registration-intro { margin-top: clamp(7px, calc(11vw - 149px), 52px); }
+.booking-intro,
 .booking-intro + .calendar-frame,
-.booking-intro + .calendar-card { margin-top: 10px; }
+.booking-intro + .calendar-card {
+  max-width: 760px;
+}
+.booking-intro + .calendar-frame,
+.booking-intro + .calendar-card {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
 .booking-intro .lead { max-width: none; }
 .booking-reminder { margin: 18px 0 0; text-align: center; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
