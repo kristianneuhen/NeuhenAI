@@ -38,7 +38,7 @@
   {% if booking_available %}
   <form class="completion-form" action="{{ url_for('booking_complete') }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    <button class="button button--secondary button--cta" type="submit">I have completed my booking</button>
+    <button class="button button--secondary button--cta" type="submit" onclick="return confirmBookingCompletion(event)">I have completed my booking</button>
   </form>
   {% else %}
   <form class="completion-form" action="{{ url_for('booking_complete') }}" method="post">
@@ -47,4 +47,19 @@
   </form>
   {% endif %}
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function confirmBookingCompletion(event) {
+    const confirmed = window.confirm(
+      'Please complete the booking first. Have you seen “Booking confirmed” in Google Calendar?'
+    );
+    if (!confirmed) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
+  }
+</script>
 {% endblock %}
