@@ -263,7 +263,7 @@ def test_booking_page_embeds_configured_google_calendar_schedule():
 
     assert b"calendar.google.com/calendar/appointments/schedules/AcZssZ0k" in page.data
     assert b"Google Calendar booking page" in page.data
-    assert b"calendar-frame--muted" in page.data
+    assert b"calendar-frame--muted" not in page.data
 
 
 def test_booking_page_uses_only_google_calendar_urls(monkeypatch):

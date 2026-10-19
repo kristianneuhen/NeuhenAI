@@ -4,16 +4,14 @@
 
 {% block content %}
 <section class="funnel-card funnel-card--wide">
-  <p class="eyebrow">Book your call</p>
-  <h1>Choose a time that works for you.</h1>
-  <p class="lead">
-    The calendar below is handled by Google Calendar. Your booking details are
-    entered there, rather than stored by this website.
-  </p>
+  <div class="acquire-intro booking-intro">
+    <h1 class="hero-title">Choose <span class="acquire-accent">a time</span> that works for you.</h1>
+    <p class="lead">The calendar below is handled by Google Calendar. Your booking details are entered there, rather than stored by this website.</p>
+  </div>
 
   {% if embed_url %}
   <iframe
-    class="calendar-frame calendar-frame--muted"
+    class="calendar-frame"
     src="{{ embed_url }}"
     title="Google Calendar booking page"
     referrerpolicy="strict-origin-when-cross-origin"
@@ -34,6 +32,8 @@
     </p>
   </div>
   {% endif %}
+
+  <p class="booking-reminder">Make sure to see “Booking confirmed” before taking the next step.</p>
 
   {% if booking_available %}
   <form class="completion-form" action="{{ url_for('booking_complete') }}" method="post">
