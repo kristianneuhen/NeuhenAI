@@ -144,7 +144,15 @@ body:has(.hero-outside) { padding: 0; }
 }
 .acquire-intro .hero-title,
 .acquire-intro .lead { margin-left: auto; margin-right: auto; }
-.acquire-intro .hero-title { color: #f3f4f6; font-size: clamp(2.2rem, 5vw, 4.1rem); max-width: none; width: 100%; }
+.acquire-intro .hero-title {
+  color: #f3f4f6;
+  font-size: clamp(2.2rem, 5vw, 4.1rem);
+  font-weight: 700;
+  letter-spacing: -.045em;
+  line-height: 1.03;
+  max-width: none;
+  width: 100%;
+}
 .acquire-accent {
   background: linear-gradient(to top, #4f46e5, #6366f1);
   background-clip: text;
