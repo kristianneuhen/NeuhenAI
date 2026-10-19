@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
     <script src="{{ url_for('static', filename='background.js') }}" defer></script>
   </head>
-  <body class="{% if request.endpoint == 'index' %}landing-page{% endif %}">
+  <body class="{% if request.endpoint == 'index' %}landing-page{% elif request.endpoint == 'acquire' %}acquire-page{% endif %}">
     <canvas id="ambient-background" aria-hidden="true"></canvas>
     {% block outside_content %}{% endblock %}
     <div class="site-frame">
