@@ -38,6 +38,12 @@
   {% if booking_available %}
   <form class="completion-form" action="{{ url_for('booking_complete') }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <label class="check-row booking-confirmation" for="booking-confirmed">
+      <input id="booking-confirmed" name="booking_confirmed" type="checkbox" value="yes" />
+      <span>
+        I saw booking confirmed.
+      </span>
+    </label>
     <button class="button button--secondary button--cta" type="submit" onclick="return confirmBookingCompletion(event)">I have completed my booking</button>
   </form>
   {% else %}
@@ -52,11 +58,10 @@
 {% block scripts %}
 <script>
   function confirmBookingCompletion(event) {
-    const confirmed = window.confirm(
-      'Please complete the booking first. Have you seen “Booking confirmed” in Google Calendar?'
-    );
-    if (!confirmed) {
+    const checkbox = document.getElementById('booking-confirmed');
+    if (!checkbox || !checkbox.checked) {
       event.preventDefault();
+      window.alert('Please complete the booking and check “I saw booking confirmed” before continuing.');
       return false;
     }
     return true;
