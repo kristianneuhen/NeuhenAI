@@ -210,7 +210,7 @@ def test_video_settings_are_rendered_as_safe_youtube_embeds():
         page = client.get(path)
 
         assert page.status_code == 200
-        assert b"https://www.youtube.com/embed/1kJ8IUANR8s?rel=0" in page.data
+        assert b"https://www.youtube.com/embed/tb7JakcMUKQ?rel=0" in page.data
         assert b"Open video on YouTube" not in page.data
 
 
