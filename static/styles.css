@@ -187,7 +187,6 @@ body:has(.hero-outside) { padding: 0; }
   margin-top: 10px;
 }
 .booking-intro .lead { max-width: none; }
-.booking-reminder { margin: 18px 0 0; text-align: left; }
 .booking-confirmation { margin-top: 28px; }
 .booking-confirmation + .button { margin-top: 12px; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
