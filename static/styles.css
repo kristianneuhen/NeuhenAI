@@ -90,7 +90,7 @@ body:has(.hero-outside) { padding: 0; }
 
 .back-link {
   color: #a8adb5;
-  font-size: 1.25rem;
+  font-size: .84rem;
   text-decoration: none;
 }
 
