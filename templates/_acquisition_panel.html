@@ -1,4 +1,11 @@
 <section class="funnel-card">
+  {% if show_acquire_intro %}
+  <div class="acquire-intro" aria-labelledby="acquire-title">
+    <h1 id="acquire-title" class="hero-title">Learn how we can add extra revenue to your business using our AI client acquisition services</h1>
+    <p class="lead">Watch the short explainer video and schedule your implementation call</p>
+  </div>
+  {% endif %}
+
   {% set video = videos.introduction %}
   {% include "_video_embed.html" %}
 
