@@ -153,7 +153,7 @@ body:has(.hero-outside) { padding: 0; }
 }
 .acquire-intro .hero-title { margin-bottom: 0; }
 .acquire-intro .lead {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   line-height: 1.5;
   margin-bottom: 0;
   margin-left: 0 !important;
