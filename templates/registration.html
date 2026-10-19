@@ -5,18 +5,12 @@
 {% block content %}
 <section class="funnel-card">
   <div class="acquire-intro registration-intro">
-    <h1 class="hero-title">Pick a time for a <span class="acquire-accent">short introduction call</span>.</h1>
+    <h1 class="hero-title">Pick a time for a <span class="acquire-accent">short introduction</span> call.</h1>
     <p class="lead">The next step is simply to choose a suitable time in the booking calendar. Watch the video to learn what to expect and how to prepare for the call.</p>
   </div>
 
   {% set video = videos.booking_guidance %}
   {% include "_video_embed.html" %}
-
-  <ol class="simple-list">
-    <li>Open the calendar.</li>
-    <li>Choose an available time that works for you.</li>
-    <li>Complete the booking details in Google Calendar.</li>
-  </ol>
 
   <a class="button button--primary" href="{{ url_for('book') }}">Open the booking step</a>
 </section>
