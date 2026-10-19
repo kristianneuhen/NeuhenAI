@@ -151,7 +151,6 @@ body:has(.hero-outside) { padding: 0; }
   letter-spacing: -.045em;
   line-height: 1.03;
   max-width: none;
-  text-align: left !important;
   width: 100%;
 }
 .acquire-accent {
