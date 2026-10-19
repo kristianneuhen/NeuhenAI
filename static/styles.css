@@ -136,7 +136,7 @@ body:has(.hero-outside) { padding: 0; }
 .acquire-intro {
   margin: 0 auto;
   max-width: 1100px;
-  padding: 0 0 clamp(28px, 4vh, 52px);
+  padding: 0;
   position: relative;
   text-align: center;
   z-index: 1;
@@ -150,7 +150,16 @@ body:has(.hero-outside) { padding: 0; }
   -webkit-background-clip: text;
   color: transparent;
 }
-.acquire-intro .lead { max-width: 62ch; }
+.acquire-intro .hero-title { margin-bottom: 0; }
+.acquire-intro .lead {
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: clamp(24px, 3vh, 36px);
+  max-width: 62ch;
+  text-align: left;
+}
+.funnel-card--acquire .video-embed { margin-top: 10px; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 500; letter-spacing: .01em; }
 .hero-title { font-size: clamp(2.8rem, 6.5vw, 5.4rem); font-weight: 500; letter-spacing: -.05em; }
