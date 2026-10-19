@@ -139,6 +139,7 @@ body:has(.hero-outside) { padding: 0; }
   padding: 0;
   position: relative;
   text-align: center;
+  width: 100%;
   z-index: 1;
 }
 .acquire-intro .hero-title,
@@ -152,16 +153,17 @@ body:has(.hero-outside) { padding: 0; }
 }
 .acquire-intro .hero-title { margin-bottom: 0; }
 .acquire-intro .lead {
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.5;
   margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   margin-top: clamp(72px, 9vh, 108px);
   max-width: 62ch;
-  text-align: left;
+  text-align: left !important;
+  width: 100%;
 }
-.acquire-intro .hero-title + .lead { text-align: left; }
+.acquire-intro .hero-title + .lead { text-align: left !important; }
 .funnel-card--acquire .video-embed { margin-top: 10px; }
 .eyebrow { color: #c9cdd2; font-weight: 750; margin: 0 0 12px; }
 .hero-eyebrow { color: #6366f1; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 500; letter-spacing: .01em; }
