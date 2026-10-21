@@ -262,6 +262,10 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   width: 100%;
 }
 
+.acquisition-card-intro { margin-top: 44px; }
+.acquisition-card-intro h1 { margin-bottom: 20px; }
+.acquisition-card-intro .lead { margin-bottom: 0; }
+
 .glow-grid {
   display: grid;
   gap: 16px;
