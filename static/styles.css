@@ -262,8 +262,9 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   width: 100%;
 }
 
-.acquisition-card-intro { margin-top: 44px; }
-.acquisition-card-intro h1 { font-size: clamp(1.1rem, 2.5vw, 2.05rem); margin-bottom: 20px; }
+.acquisition-card-intro { margin: 44px 0; text-align: center; }
+.acquisition-card-intro h1 { font-size: clamp(1.1rem, 2.5vw, 2.05rem); margin-bottom: 0; }
+.acquisition-card-intro + .glow-grid { margin-top: 0; }
 
 .glow-grid {
   display: grid;
@@ -324,6 +325,7 @@ p, li { color: #c6c9ce; line-height: 1.65; }
 .glow-card__icon svg { height: 20px; width: 20px; }
 .glow-card h3 { color: #f3f4f6; font-size: 1.25rem; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; margin: 0 0 14px; position: relative; z-index: 1; }
 .glow-card p { color: #aeb3bb; font-size: 1rem; line-height: 1.45; margin: 0; position: relative; z-index: 1; }
+.glow-card__copy--short { margin-bottom: 40px; }
 
 @media (min-width: 640px) {
   .glow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
