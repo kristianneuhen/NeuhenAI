@@ -262,64 +262,6 @@ p, li { color: #c6c9ce; line-height: 1.65; }
   width: 100%;
 }
 
-.stats-grid {
-  border: 1px solid #32363d;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 24px 0 0;
-}
-
-.stats-card {
-  background:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
-    #171717;
-  background-size: 20px 20px;
-  min-height: 204px;
-  overflow: hidden;
-  padding: 34px 32px;
-  position: relative;
-}
-.stats-card + .stats-card { border-left: 1px solid #32363d; }
-.stats-card__top { align-items: center; display: flex; gap: 12px; }
-.stats-icon {
-  align-items: center;
-  background: linear-gradient(to bottom, #34363a, #0c0c0c);
-  border: 1px solid #555a62;
-  border-radius: 12px;
-  color: #fff;
-  display: inline-flex;
-  font-size: 1.5rem;
-  height: 56px;
-  justify-content: center;
-  width: 56px;
-}
-.stats-value { color: #f3f4f6; font-size: 1.9rem; letter-spacing: -.04em; }
-.stats-card p { color: #aeb3bb; font-size: 1rem; line-height: 1.45; margin: 18px 0 0; }
-.stats-edge {
-  background: #171717;
-  border-bottom: 1px solid #32363d;
-  border-left: 1px solid #32363d;
-  height: 40px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transition: transform .2s ease;
-  width: 40px;
-}
-.stats-edge::after {
-  background: #32363d;
-  content: "";
-  height: 1px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  transform: rotate(45deg);
-  transform-origin: left center;
-  width: 56px;
-}
-.stats-card:hover .stats-edge { transform: translate(40px, -40px); }
-
 .video-placeholder span,
 .video-placeholder small { color: #a8adb5; }
 .video-placeholder strong { font-size: 1.15rem; }
@@ -538,9 +480,6 @@ body:has(.faq-layout) { display: grid; place-items: center; }
   .funnel-card, .legal-card { padding: 28px 22px; }
   .hero-outside { padding: 72px 16px; }
   .calendar-frame { height: 620px; }
-  .stats-grid { grid-template-columns: 1fr; }
-  .stats-card + .stats-card { border-left: 0; border-top: 1px solid #32363d; }
-  .stats-card { padding: 28px 24px; }
   .faq-layout { grid-template-columns: 1fr; min-height: 560px; padding: 28px 22px; }
   .contact-layout { grid-template-columns: 1fr; }
   .contact-map { margin-top: 32px; }
