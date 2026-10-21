@@ -9,6 +9,33 @@
   {% set video = videos.introduction %}
   {% include "_video_embed.html" %}
 
+  <div class="stats-grid" aria-label="Neuhen AI service highlights">
+    <article class="stats-card">
+      <span class="stats-edge" aria-hidden="true"></span>
+      <div class="stats-card__top">
+        <span class="stats-icon" aria-hidden="true">↗</span>
+        <strong class="stats-value">10+</strong>
+      </div>
+      <p>Years in the business where we helped companies grow.</p>
+    </article>
+    <article class="stats-card">
+      <span class="stats-edge" aria-hidden="true"></span>
+      <div class="stats-card__top">
+        <span class="stats-icon" aria-hidden="true">▣</span>
+        <strong class="stats-value">100k+</strong>
+      </div>
+      <p>Over 100k people have used our services.</p>
+    </article>
+    <article class="stats-card">
+      <span class="stats-edge" aria-hidden="true"></span>
+      <div class="stats-card__top">
+        <span class="stats-icon" aria-hidden="true">↑</span>
+        <strong class="stats-value">100%</strong>
+      </div>
+      <p>We are always available to help you with your needs.</p>
+    </article>
+  </div>
+
   <form class="consent-form" action="{{ url_for('consent') }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <label class="check-row" for="agree">
