@@ -9,6 +9,64 @@
   {% set video = videos.introduction %}
   {% include "_video_embed.html" %}
 
+  <ul class="glow-grid" aria-label="Neuhen AI highlights">
+    <li class="glow-card">
+      <div class="glow-card__inner">
+        <span class="glow-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="M5 16v5M2.5 18.5h5M19 16v5M16.5 18.5h5"/></svg>
+        </span>
+        <div>
+          <h3>Do things the right way</h3>
+          <p>Running out of copy so I'll write anything.</p>
+        </div>
+      </div>
+    </li>
+    <li class="glow-card">
+      <div class="glow-card__inner">
+        <span class="glow-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="M5 16v5M2.5 18.5h5M19 16v5M16.5 18.5h5"/></svg>
+        </span>
+        <div>
+          <h3>The best AI code editor ever.</h3>
+          <p>Yes, it's true. I'm not even kidding. Ask my mom if you don't believe me.</p>
+        </div>
+      </div>
+    </li>
+    <li class="glow-card">
+      <div class="glow-card__inner">
+        <span class="glow-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="M5 16v5M2.5 18.5h5M19 16v5M16.5 18.5h5"/></svg>
+        </span>
+        <div>
+          <h3>You should buy Aceternity UI Pro</h3>
+          <p>It's the best money you'll ever spend.</p>
+        </div>
+      </div>
+    </li>
+    <li class="glow-card">
+      <div class="glow-card__inner">
+        <span class="glow-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="M5 16v5M2.5 18.5h5M19 16v5M16.5 18.5h5"/></svg>
+        </span>
+        <div>
+          <h3>This card is also built by Cursor</h3>
+          <p>I'm not even kidding. Ask my mom if you don't believe me.</p>
+        </div>
+      </div>
+    </li>
+    <li class="glow-card">
+      <div class="glow-card__inner">
+        <span class="glow-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="M5 16v5M2.5 18.5h5M19 16v5M16.5 18.5h5"/></svg>
+        </span>
+        <div>
+          <h3>Coming soon on Aceternity UI</h3>
+          <p>I'm writing the code as I record this, no shit.</p>
+        </div>
+      </div>
+    </li>
+  </ul>
+
   <form class="consent-form" action="{{ url_for('consent') }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <label class="check-row" for="agree">
